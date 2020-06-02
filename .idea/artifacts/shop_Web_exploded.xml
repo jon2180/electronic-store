@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="shop:Web exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/shop_web_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="shop/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="shop" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="tomcat" />
+          <element id="library" level="project" name="project-lib" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
