@@ -53,7 +53,7 @@ public class DbHelper {
     /**
      * 获取数据库的一个连接对象
      *
-     * @return
+     * @return Connection
      * @throws SQLException
      */
     public static Connection getConn() throws SQLException {

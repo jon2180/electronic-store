@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class CategoryService {
     private final QueryRunner qr = new QueryRunner();
-    private final ScalarHandler<Long> scalarHandler = new ScalarHandler<Long>();
+    private final ScalarHandler<Long> scalarHandler = new ScalarHandler<>();
     private final BeanHandler<Category> beanHandler = new BeanHandler<Category>(Category.class);
     private final BeanListHandler<Category> beanListHandler = new BeanListHandler<Category>(Category.class);
 

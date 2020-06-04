@@ -16,12 +16,12 @@
  * ======================================================================== */
 
 
-(function($, window) {
+(function ($, window) {
     var zui = $.zui;
-    if(zui) {
+    if (zui) {
         function extendTo(name, target) {
-            if($.isArray(name)) {
-                $.each(name, function(i, n) {
+            if ($.isArray(name)) {
+                $.each(name, function (i, n) {
                     extendTo(n, target);
                 });
                 return;
@@ -30,7 +30,7 @@
             var config = {};
             config[name] = zui[name];
 
-            if(target) {
+            if (target) {
                 $.extend(target, config);
             } else {
                 $.extend(config);

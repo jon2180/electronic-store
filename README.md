@@ -1,6 +1,10 @@
 # shopping-mall
 
-基于Jsp/servlet的网上购物商城
+基于Jsp/servlet的网上购物商城 用户端
+
+另：
+- 商家端【未实现】
+- 平台端【未实现】
 
 ## 开发进程
 

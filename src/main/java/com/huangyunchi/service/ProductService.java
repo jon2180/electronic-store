@@ -21,9 +21,9 @@ import java.util.List;
  */
 public class ProductService {
     private final QueryRunner qr = new QueryRunner();
-    private final ScalarHandler<Long> scalarHandler = new ScalarHandler<Long>();
-    private final BeanHandler<Product> beanHandler = new BeanHandler<Product>(Product.class);
-    private final BeanListHandler<Product> beanListHandler = new BeanListHandler<Product>(Product.class);
+    private final ScalarHandler<Long> scalarHandler = new ScalarHandler<>();
+    private final BeanHandler<Product> beanHandler = new BeanHandler<>(Product.class);
+    private final BeanListHandler<Product> beanListHandler = new BeanListHandler<>(Product.class);
 
     public Product save(Product product) throws RuntimeException {
         String sql = "INSERT INTO product(name, cate_id, thumbnail, inventory, "
@@ -141,11 +141,11 @@ public class ProductService {
             conn = DbHelper.getConn();
 
             Long temp = qr.query(conn, sql, scalarHandler);
-            if (temp != null && temp.longValue() > 0) {
-                page.setTotalElements(temp.longValue());
+            if (temp != null && temp > 0) {
+                page.setTotalElements(temp);
 
-                Object[] params = {Integer.valueOf((number - 1) * size),
-                        Integer.valueOf(size)};
+                Object[] params = {(number - 1) * size,
+                        size};
 
                 List<Product> list = qr.query(conn, sql2, beanListHandler, params);
                 page.setItems(list);
@@ -169,7 +169,7 @@ public class ProductService {
             sql.append(" AND p.cate_id=?");
             sql2.append(" AND p.cate_id=?");
 
-            param.add(Integer.valueOf(cate_id));
+            param.add(cate_id);
         }
         if (title != null && !"".equals(title.trim())) {
             sql.append(" AND p.name LIKE ?");
@@ -185,12 +185,12 @@ public class ProductService {
 
             Long temp = qr.query(conn, sql.toString(),
                     scalarHandler, param.toArray());
-            if (temp != null && temp.longValue() > 0) {
-                page.setTotalElements(temp.longValue());
+            if (temp != null && temp > 0) {
+                page.setTotalElements(temp);
 
                 sql2.append(" ORDER BY p.id DESC LIMIT ?,?");
-                param.add(Integer.valueOf((number - 1) * size));
-                param.add(Integer.valueOf(size));
+                param.add((number - 1) * size);
+                param.add(size);
 
                 List<Product> list = qr.query(conn, sql2.toString(), beanListHandler, param.toArray());
                 page.setItems(list);
@@ -261,12 +261,12 @@ public class ProductService {
             conn = DbHelper.getConn();
 
             Long temp = qr.query(conn, sql, scalarHandler, cate_id);
-            if (temp != null && temp.longValue() > 0) {
-                page.setTotalElements(temp.longValue());
+            if (temp != null && temp > 0) {
+                page.setTotalElements(temp);
 
                 Object[] params = {cate_id,
-                        Integer.valueOf((number - 1) * size),
-                        Integer.valueOf(size)};
+                        (number - 1) * size,
+                        size};
 
                 List<Product> list = qr.query(conn, sql2, beanListHandler, params);
                 page.setItems(list);
