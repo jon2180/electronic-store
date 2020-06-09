@@ -1,4 +1,4 @@
-# shopping-mall
+# Electronic Store
 
 基于Jsp/servlet的网上购物商城 用户端
 

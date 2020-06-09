@@ -2,7 +2,6 @@ package com.huangyunchi.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-
 /**
  * 会员实体类---->对象数据
  *

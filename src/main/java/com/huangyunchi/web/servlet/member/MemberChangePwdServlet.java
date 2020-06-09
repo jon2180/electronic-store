@@ -2,6 +2,7 @@ package com.huangyunchi.web.servlet.member;
 
 import com.huangyunchi.entity.Member;
 import com.huangyunchi.service.MemberService;
+import com.huangyunchi.service.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,7 +35,7 @@ public class MemberChangePwdServlet extends HttpServlet {
         if (mbr.getPwd().equals(pwd)) {
             mbr.setPwd(pwd2);
 
-            MemberService service = new MemberService();
+            MemberService service = ServiceFactory.getMemberService();
             service.update(mbr);
 
             request.getSession().invalidate();

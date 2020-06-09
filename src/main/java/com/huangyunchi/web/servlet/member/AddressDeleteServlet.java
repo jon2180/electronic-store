@@ -1,6 +1,7 @@
 package com.huangyunchi.web.servlet.member;
 
 import com.huangyunchi.service.AddressService;
+import com.huangyunchi.service.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +24,7 @@ public class AddressDeleteServlet extends HttpServlet {
         String id = request.getParameter("id");
 
         //
-        AddressService service = new AddressService();
+        AddressService service = ServiceFactory.getAddressService();
         service.delete(Integer.parseInt(id));
 
         //

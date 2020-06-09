@@ -3,6 +3,7 @@ package com.huangyunchi.web.servlet.member;
 import com.huangyunchi.entity.Address;
 import com.huangyunchi.entity.Member;
 import com.huangyunchi.service.AddressService;
+import com.huangyunchi.service.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,7 +27,7 @@ public class AddressListServlet extends HttpServlet {
 
 
         //
-        AddressService service = new AddressService();
+        AddressService service = ServiceFactory.getAddressService();
         List<Address> list = service.findByMember(mbr.getId());
 
         //

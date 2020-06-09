@@ -3,6 +3,7 @@ package com.huangyunchi.web.servlet;
 import com.huangyunchi.entity.*;
 import com.huangyunchi.service.AddressService;
 import com.huangyunchi.service.ProductService;
+import com.huangyunchi.service.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,7 +34,7 @@ public class OrderConfirmServlet extends HttpServlet {
 
         //
         HttpSession session = request.getSession();
-        ProductService service = new ProductService();
+        ProductService service = ServiceFactory.getProductService();
 
         int allAmount = 0;
         BigDecimal allPrice = new BigDecimal(0.00);

@@ -9,6 +9,7 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class MemberService {
     /**
      * 单行单列的结果集处理器
      */
-    private final ScalarHandler<Long> scalarHandler = new ScalarHandler<Long>();
+    private final ScalarHandler<BigInteger> scalarHandler = new ScalarHandler<>();
     /**
      * 单行多列的结果集处理
      */
@@ -57,7 +58,8 @@ public class MemberService {
             conn.setAutoCommit(false); //启动事务
 
             //执行数据库的插入操作，返回生成的主键值
-            Long temp = qr.insert(conn, sql, scalarHandler, params);
+//            final ScalarHandler<BigInteger> scalarHandler = new ScalarHandler<>();
+            BigInteger temp = qr.insert(conn, sql, scalarHandler, params);
             if (temp != null) {
                 member.setId(temp.intValue());
             }
@@ -215,7 +217,7 @@ public class MemberService {
         try {
             conn = DbHelper.getConn();
 
-            Long temp = qr.query(conn, sql, scalarHandler);
+            BigInteger temp = qr.query(conn, sql, scalarHandler);
             if (temp != null) {
                 count = temp.longValue();
             }

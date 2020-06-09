@@ -8,6 +8,7 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -19,7 +20,7 @@ import java.util.List;
  */
 public class CategoryService {
     private final QueryRunner qr = new QueryRunner();
-    private final ScalarHandler<Long> scalarHandler = new ScalarHandler<>();
+    private final ScalarHandler<BigInteger> scalarHandler = new ScalarHandler<>();
     private final BeanHandler<Category> beanHandler = new BeanHandler<Category>(Category.class);
     private final BeanListHandler<Category> beanListHandler = new BeanListHandler<Category>(Category.class);
 
@@ -35,7 +36,7 @@ public class CategoryService {
             conn.setAutoCommit(false); //开启事务
             System.out.println(sql);
             //执行数据库操作的插入操作，返回生成的主键值
-            Long id = qr.insert(conn, sql, scalarHandler, params);
+            BigInteger id = qr.insert(conn, sql, scalarHandler, params);
             cate.setId(id.intValue());
 
             DbUtils.commitAndCloseQuietly(conn); //提交事务并关闭连接
@@ -124,7 +125,7 @@ public class CategoryService {
 
             System.out.println(sql);
 
-            Long count = qr.query(sql, scalarHandler, id);
+            BigInteger count = qr.query(sql, scalarHandler, id);
             if (count != null && count.longValue() > 0) {
                 throw new RuntimeException("删除失败，有子类目");
             } else {

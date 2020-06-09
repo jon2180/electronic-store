@@ -5,6 +5,7 @@ import com.huangyunchi.entity.Member;
 import com.huangyunchi.entity.Orders;
 import com.huangyunchi.service.AddressService;
 import com.huangyunchi.service.OrdersService;
+import com.huangyunchi.service.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,7 +47,7 @@ public class PaymentServlet extends HttpServlet {
         order.setNumber(df.format(new Date())); //生成一个有意义订单编号
         order.setStatus(2);
 
-        AddressService addressService = new AddressService();
+        AddressService addressService = ServiceFactory.getAddressService();
         Address address = addressService.findOne(Integer.valueOf(address_id));
         order.setContact(address.getContact());
         order.setMobile(address.getMobile());
@@ -54,7 +55,7 @@ public class PaymentServlet extends HttpServlet {
         order.setZipcode(address.getZipcode());
 
         //保存订单
-        OrdersService ordersService = new OrdersService();
+        OrdersService ordersService = ServiceFactory.getOrdersService();
         ordersService.save(order);
 
         //用户购物流程结束------>清除当前session中的购物车对象

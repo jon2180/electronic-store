@@ -2,6 +2,7 @@ package com.huangyunchi.web.servlet.member;
 
 import com.huangyunchi.entity.Member;
 import com.huangyunchi.service.AddressService;
+import com.huangyunchi.service.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,7 +25,7 @@ public class AddressDefaultServlet extends HttpServlet {
         Member mbr = (Member) request.getSession().getAttribute("curr_mbr");
 
         //业务逻辑处理
-        AddressService service = new AddressService();
+        AddressService service = ServiceFactory.getAddressService();
         service.updateDefault(mbr.getId(), Integer.parseInt(id));
 
         //

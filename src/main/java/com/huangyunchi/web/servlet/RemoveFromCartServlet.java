@@ -24,7 +24,7 @@ public class RemoveFromCartServlet extends HttpServlet {
         String idStr = request.getParameter("id");
         Integer id = Integer.valueOf(idStr);
 
-        //ProductService service = new ProductService();
+        //ProductService service = ServiceFactory.getProductService();
         //Product prod = service.findOne(id);
 
         //购物车是存放在session中的

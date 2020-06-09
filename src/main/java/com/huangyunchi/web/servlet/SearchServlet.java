@@ -3,6 +3,7 @@ package com.huangyunchi.web.servlet;
 import com.huangyunchi.entity.Product;
 import com.huangyunchi.entity.common.Page;
 import com.huangyunchi.service.ProductService;
+import com.huangyunchi.service.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,7 +39,7 @@ public class SearchServlet extends HttpServlet {
         }
 
         //
-        ProductService service = new ProductService();
+        ProductService service = ServiceFactory.getProductService();
         Page<Product> page = service.findByLikeName(keyword, number, size);
 
         //

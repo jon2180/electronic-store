@@ -8,6 +8,7 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +20,9 @@ import java.util.List;
  */
 public class AddressService {
     private final QueryRunner qr = new QueryRunner();
-    private final ScalarHandler<Long> scalarHandler = new ScalarHandler<Long>();
-    private final BeanHandler<Address> beanHandler = new BeanHandler<Address>(Address.class);
-    private final BeanListHandler<Address> beanListHandler = new BeanListHandler<Address>(Address.class);
+    private final ScalarHandler<BigInteger> scalarHandler = new ScalarHandler<>();
+    private final BeanHandler<Address> beanHandler = new BeanHandler<>(Address.class);
+    private final BeanListHandler<Address> beanListHandler = new BeanListHandler<>(Address.class);
 
     public Address save(Address address) throws RuntimeException {
         String sql = "INSERT INTO address(contact, mobile, street, zipcode, "
@@ -37,7 +38,7 @@ public class AddressService {
             conn.setAutoCommit(false); //开启事务
 
             //执行数据库操作的插入操作，返回生成的主键值
-            Long id = qr.insert(conn, sql, scalarHandler, params);
+            BigInteger id = qr.insert(conn, sql, scalarHandler, params);
             address.setId(id.intValue());
 
             DbUtils.commitAndCloseQuietly(conn); //提交事务并关闭连接

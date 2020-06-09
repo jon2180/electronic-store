@@ -10,6 +10,7 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,7 +27,7 @@ import java.util.List;
 public class OrdersService {
 
     private final QueryRunner qr = new QueryRunner();
-    private final ScalarHandler<Long> scalarHandler = new ScalarHandler<Long>();
+    private final ScalarHandler<Long> scalarHandler = new ScalarHandler<>();
     //private BeanHandler<Orders> beanHandler = new BeanHandler<Orders>(Orders.class);
     //private BeanListHandler<Orders> beanListHandler = new BeanListHandler<Orders>(Orders.class);
 
@@ -75,7 +76,8 @@ public class OrdersService {
             conn = DbHelper.getConn();
             conn.setAutoCommit(false);
 
-            Long id = qr.insert(conn, sql, scalarHandler, params);
+            ScalarHandler<BigInteger> scalarHandler = new ScalarHandler<>();
+            BigInteger id = qr.insert(conn, sql, scalarHandler, params);
             orders.setId(id.intValue());
 
             //批量添加订单项
@@ -621,8 +623,6 @@ public class OrdersService {
     /**
      * 获取指定编号的订单
      *
-     * @param number
-     * @param size
      * @return
      * @throws RuntimeException
      */

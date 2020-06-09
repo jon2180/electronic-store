@@ -2,6 +2,7 @@ package com.huangyunchi.web.servlet.member;
 
 import com.huangyunchi.entity.Member;
 import com.huangyunchi.service.MemberService;
+import com.huangyunchi.service.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,7 +39,7 @@ public class MemberProfileServlet extends HttpServlet {
         mbr.setEmail(email);
         mbr.setGender(Boolean.parseBoolean(genderStr));
 
-        MemberService service = new MemberService();
+        MemberService service = ServiceFactory.getMemberService();
         service.update(mbr);
 
         //step3: 响应文本

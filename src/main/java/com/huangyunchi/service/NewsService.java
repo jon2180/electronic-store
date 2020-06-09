@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class NewsService {
     private final QueryRunner qr = new QueryRunner();
-    private final ScalarHandler<Long> scalarHandler = new ScalarHandler<Long>();
+    private final ScalarHandler<Long> scalarHandler = new ScalarHandler<>();
     private final BeanHandler<News> beanHandler = new BeanHandler<News>(News.class);
     private final BeanListHandler<News> beanListHandler = new BeanListHandler<News>(News.class);
 

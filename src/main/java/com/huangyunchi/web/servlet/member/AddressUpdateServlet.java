@@ -2,6 +2,7 @@ package com.huangyunchi.web.servlet.member;
 
 import com.huangyunchi.entity.Address;
 import com.huangyunchi.service.AddressService;
+import com.huangyunchi.service.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,7 +29,7 @@ public class AddressUpdateServlet extends HttpServlet {
         String zipcode = request.getParameter("zipcode");
         String default_value = request.getParameter("default_value");
 
-        AddressService service = new AddressService();
+        AddressService service = ServiceFactory.getAddressService();
         Address address = service.findOne(Integer.parseInt(id));
         address.setContact(contact);
         address.setMobile(mobile);

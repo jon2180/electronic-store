@@ -3,6 +3,8 @@ package com.huangyunchi.web.servlet;
 import com.huangyunchi.entity.News;
 import com.huangyunchi.entity.common.Page;
 import com.huangyunchi.service.NewsService;
+import com.huangyunchi.service.ServiceFactory;
+import javafx.concurrent.Service;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,7 +35,7 @@ public class NewsListServlet extends HttpServlet {
             number = 1;
         }
 
-        NewsService newsService = new NewsService();
+        NewsService newsService = ServiceFactory.getNewsService();
         Page<News> page = newsService.findByPublic(number, size);
 
 

@@ -3,6 +3,7 @@ package com.huangyunchi.web.servlet.member;
 import com.huangyunchi.entity.Address;
 import com.huangyunchi.entity.Member;
 import com.huangyunchi.service.AddressService;
+import com.huangyunchi.service.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,7 +43,7 @@ public class AddressAddServlet extends HttpServlet {
         address.setMbr_id(mbr.getId());
 
         //业务逻辑处理
-        AddressService service = new AddressService();
+        AddressService service = ServiceFactory.getAddressService();
         service.save(address); //保存新增的地址,address的ID就有值了
 
         //处理默认地址的问题

@@ -2,6 +2,7 @@ package com.huangyunchi.web.servlet;
 
 import com.huangyunchi.entity.News;
 import com.huangyunchi.service.NewsService;
+import com.huangyunchi.service.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,7 +26,7 @@ public class NewsDetailServlet extends HttpServlet {
         Integer id = Integer.valueOf(idStr);
 
         //
-        NewsService newsService = new NewsService();
+        NewsService newsService = ServiceFactory.getNewsService();
         News news = newsService.findOne(id);
 
         //

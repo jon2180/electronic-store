@@ -5,6 +5,7 @@ import com.huangyunchi.entity.Product;
 import com.huangyunchi.entity.common.Page;
 import com.huangyunchi.service.CategoryService;
 import com.huangyunchi.service.ProductService;
+import com.huangyunchi.service.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -45,7 +46,7 @@ public class ProductListServlet extends HttpServlet {
 
 
         ////////////////类目参数的处理
-        ProductService productService = new ProductService();
+        ProductService productService = ServiceFactory.getProductService();
         Page<Product> page = null;
         String level = request.getParameter("level");
         if ("top".equals(level)) { //查找指定一级类目下的产品列表

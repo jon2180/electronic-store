@@ -5,6 +5,7 @@ import com.huangyunchi.entity.Product;
 import com.huangyunchi.entity.common.Page;
 import com.huangyunchi.service.CategoryService;
 import com.huangyunchi.service.ProductService;
+import com.huangyunchi.service.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,7 +32,7 @@ public class ProductDetailServlet extends HttpServlet {
         Integer id = Integer.valueOf(idStr);
 
         //
-        ProductService productService = new ProductService();
+        ProductService productService = ServiceFactory.getProductService();
         Product product = productService.findOne(id);
         request.setAttribute("product", product);
 

@@ -5,6 +5,9 @@ import com.huangyunchi.entity.Member;
 import com.huangyunchi.entity.Orders;
 import com.huangyunchi.service.AddressService;
 import com.huangyunchi.service.MemberService;
+import com.huangyunchi.service.ServiceFactory;
+import com.huangyunchi.util.HeaUtil;
+import com.huangyunchi.util.Validator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
@@ -34,12 +38,26 @@ public class MemberLoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //step1： 获取客户端提交的数据
         String mobile = request.getParameter("mobile");
-        String pwd = request.getParameter("pwd");
+        String rawPwd = request.getParameter("pwd");
 
         //step2: 业务逻辑处理
+        // 验证格式
+        if (!Validator.mobilePhone(mobile) || !Validator.checkComplexPassword(rawPwd)) {
+            request.setAttribute("msg", "注册失败，手机号或密码格式错误");
+            request.getRequestDispatcher("/member_login.jsp").forward(request, response);
+            return;
+        }
 
+        // md5 加密处理
+        String pwd = null;
+        try {
+            pwd = HeaUtil.md5(rawPwd);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
 
-        MemberService service = new MemberService();
+        MemberService service = ServiceFactory.getMemberService();
+
         Member mbr = service.findByMobile(mobile);
 
         //step3: 执行跳转
@@ -52,10 +70,10 @@ public class MemberLoginServlet extends HttpServlet {
                 //如果登录后的会员，有提交订单，跳转到/orders.jsp; 没有就跳转到会员的首页
                 Orders order = (Orders) request.getSession().getAttribute("curr_order");
                 if (order != null) {
-                    AddressService service2 = new AddressService();
+                    AddressService service2 = ServiceFactory.getAddressService();
                     List<Address> addressList = service2.findByMember(mbr.getId());
-                    request.setAttribute("addressList", addressList);
 
+                    request.setAttribute("addressList", addressList);
                     request.getRequestDispatcher("/orders.jsp").forward(request, response);
                 } else {
                     response.sendRedirect(request.getContextPath() + "/member/orders");

@@ -4,6 +4,7 @@ import com.huangyunchi.entity.Member;
 import com.huangyunchi.entity.Orders;
 import com.huangyunchi.entity.common.Page;
 import com.huangyunchi.service.OrdersService;
+import com.huangyunchi.service.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,7 +21,7 @@ import java.io.IOException;
 @WebServlet("/member/orders")
 public class OrderListServlet extends HttpServlet {
     private static final long serialVersionUID = 2964566478709855605L;
-    private final OrdersService ordersService = new OrdersService();
+    private final OrdersService ordersService = ServiceFactory.getOrdersService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

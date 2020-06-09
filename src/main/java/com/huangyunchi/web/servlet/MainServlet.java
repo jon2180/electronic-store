@@ -5,6 +5,7 @@ import com.huangyunchi.entity.Product;
 import com.huangyunchi.entity.common.Page;
 import com.huangyunchi.service.NewsService;
 import com.huangyunchi.service.ProductService;
+import com.huangyunchi.service.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +24,7 @@ public class MainServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //取出轮播图，3条
-        NewsService newsService = new NewsService();
+        NewsService newsService = ServiceFactory.getNewsService();
         Page<News> pageTop = newsService.findTopByPublic(1, 3);
         request.setAttribute("tops", pageTop.getItems());
 
@@ -32,16 +33,16 @@ public class MainServlet extends HttpServlet {
         request.setAttribute("news", pageNews.getItems());
 
         //取热门产品，6条
-        ProductService productService = new ProductService();
+        ProductService productService = ServiceFactory.getProductService();
         Page<Product> pageHot = productService.findHot(1, 6);
         request.setAttribute("hots", pageHot.getItems());
 
         //取一级类目“手机”下的商品列表，6条
-        Page<Product> pagePhone = productService.findByTopCategory(Integer.valueOf(1), 1, 6);
+        Page<Product> pagePhone = productService.findByTopCategory(1, 1, 6);
         request.setAttribute("phones", pagePhone.getItems());
 
         //取一级类目“电脑”下的商品列表，6条
-        Page<Product> pageComputer = productService.findByTopCategory(Integer.valueOf(2), 1, 6);
+        Page<Product> pageComputer = productService.findByTopCategory(2, 1, 6);
         request.setAttribute("computers", pageComputer.getItems());
 
         request.getRequestDispatcher("/main.jsp").forward(request, response);
