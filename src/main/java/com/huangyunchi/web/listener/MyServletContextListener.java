@@ -2,6 +2,7 @@ package com.huangyunchi.web.listener;
 
 import com.huangyunchi.entity.Category;
 import com.huangyunchi.service.CategoryService;
+import com.huangyunchi.service.ServiceFactory;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -38,7 +39,7 @@ public class MyServletContextListener implements ServletContextListener {
         context.setAttribute("pic_base", ctx + "/img/");
 
         //加载所有的类目列表数据
-        CategoryService service = new CategoryService();
+        CategoryService service = ServiceFactory.getCategoryService();
         List<Category> list = service.findAll();
         context.setAttribute("cates", list);
     }

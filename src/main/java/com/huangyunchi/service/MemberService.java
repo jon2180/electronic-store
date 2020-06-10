@@ -58,7 +58,7 @@ public class MemberService {
             conn.setAutoCommit(false); //启动事务
 
             //执行数据库的插入操作，返回生成的主键值
-//            final ScalarHandler<BigInteger> scalarHandler = new ScalarHandler<>();
+
             BigInteger temp = qr.insert(conn, sql, scalarHandler, params);
             if (temp != null) {
                 member.setId(temp.intValue());
@@ -216,10 +216,10 @@ public class MemberService {
         Connection conn = null;
         try {
             conn = DbHelper.getConn();
-
-            BigInteger temp = qr.query(conn, sql, scalarHandler);
+            final ScalarHandler<Long> scalarHandler = new ScalarHandler<>();
+            Long temp = qr.query(conn, sql, scalarHandler);
             if (temp != null) {
-                count = temp.longValue();
+                count = temp;
             }
         } catch (SQLException e) {
             e.printStackTrace();

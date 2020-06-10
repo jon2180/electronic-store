@@ -4,12 +4,12 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-    <jsp:include page="/icd_meta.jsp"/>
+    <jsp:include page="/WEB-INF/layout/icd_meta.jsp"/>
     <title>卓尔商城-商品详情</title>
-    <jsp:include page="/icd_link.jsp"/>
+    <jsp:include page="/WEB-INF/layout/icd_link.jsp"/>
 </head>
 <body>
-<jsp:include page="/icd_top.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/layout/icd_top.jsp"></jsp:include>
 
 <!-- 主内容 -->
 <div class="wrapper">
@@ -113,7 +113,7 @@
 </div>
 <!-- /主内容 -->
 
-<jsp:include page="/icd_bottom.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/layout/icd_bottom.jsp"></jsp:include>
 
 <!-- 添加到购物车的对话框 -->
 <div class="modal fade" id="addToCartModal">

@@ -3,12 +3,12 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-    <jsp:include page="/icd_meta.jsp"/>
+    <jsp:include page="/WEB-INF/layout/icd_meta.jsp"/>
     <title>会员-个人资料</title>
-    <jsp:include page="/icd_link.jsp"/>
+    <jsp:include page="/WEB-INF/layout/icd_link.jsp"/>
 </head>
 <body>
-<jsp:include page="/icd_top.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/layout/icd_top.jsp"></jsp:include>
 
 <!-- 主内容 -->
 <div class="wrapper" style="min-height: 500px">
@@ -16,7 +16,7 @@
     <div class="row" style="padding: 20px 0px;">
         <!-- /左边 -->
         <div class="col-xs-2">
-            <jsp:include page="/member/icd_menu.jsp">
+            <jsp:include page="/WEB-INF/layout/member/icd_menu.jsp">
                 <jsp:param value="profile" name="tag"/>
             </jsp:include>
         </div>
@@ -99,7 +99,7 @@
 </div>
 <!-- /主内容 -->
 
-<jsp:include page="/icd_bottom.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/layout/icd_bottom.jsp"></jsp:include>
 
 <script src="${ctx}/zui/lib/jquery/jquery.js"></script>
 <script src="${ctx}/js/jquery.scrollUp.min.js"></script>

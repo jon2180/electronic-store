@@ -3,12 +3,12 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-    <jsp:include page="/icd_meta.jsp"/>
+    <jsp:include page="/WEB-INF/layout/icd_meta.jsp"/>
     <title>卓尔商城-会员登录</title>
-    <jsp:include page="/icd_link.jsp"/>
+    <jsp:include page="/WEB-INF/layout/icd_link.jsp"/>
 </head>
 <body>
-<jsp:include page="/icd_top.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/layout/icd_top.jsp"></jsp:include>
 
 <!-- 主内容 -->
 <div class="wrapper" style="min-height: 500px;">
@@ -32,6 +32,12 @@
                                 </div>
                                 <c:remove var="msg"/>
                             </c:if>
+                            <!-- 格式验证提示 -->
+                            <div class="form-group" id="errorContainer" style="display: none">
+                                <div id="formValidateNotice" class="alert alert-danger"></div>
+                            </div>
+
+                            <!-- 实际内容 -->
                             <div class="form-group">
                                 <input type="text" name="mobile" id="mobile" value=""
                                        placeholder="请输入手机号" class="form-control input-lg">
@@ -40,9 +46,14 @@
                                 <input type="password" name="pwd" id="pwd" value=""
                                        placeholder="请输入密码" class="form-control input-lg">
                             </div>
-                            <div class="form-group" id="errorContainer" style="display: none">
-                                <div id="formValidateNotice" class="alert alert-danger"></div>
+                            <div class="form-group">
+                                <input type="text" name="captcha" id="captcha"
+                                       placeholder="请输入验证码" class="form-control input-lg">
                             </div>
+                            <div class="form-group">
+                                <img src="${pageContext.request.contextPath}/tool/captcha/" alt="验证码">
+                            </div>
+
                             <button type="submit" class="btn btn-primary btn-wider btn-lg">登录</button>
                             &nbsp; &nbsp;<a href="${ctx}/member_register.jsp">注册</a>&nbsp;
                             &nbsp; <a href="${ctx}/resetpassword.jsp">忘记密码</a>
@@ -58,7 +69,7 @@
 </div>
 <!-- /主内容 -->
 
-<jsp:include page="/icd_bottom.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/layout/icd_bottom.jsp"></jsp:include>
 
 <script src="${ctx}/zui/lib/jquery/jquery.js"></script>
 <script src="${ctx}/js/jquery.scrollUp.min.js"></script>

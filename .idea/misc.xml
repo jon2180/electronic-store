@@ -5,7 +5,10 @@
     <file type="web" url="file://$PROJECT_DIR$" />
   </component>
   <component name="ProjectResources">
-    <resource url="http://java.sun.com/jsp/jstl/core&quot;" location="$PROJECT_DIR$/src/main/webapp/WEB-INF/pager.tld" />
+    <resource url="http://java.sun.com/jsp/jstl/core" location="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/javax.servlet.jsp.jstl-1.2.2.jar!/META-INF/c.tld" />
+    <resource url="http://java.sun.com/jsp/jstl/fmt" location="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/javax.servlet.jsp.jstl-1.2.2.jar!/META-INF/fmt.tld" />
+    <resource url="http://java.sun.com/jsp/jstl/sql" location="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/javax.servlet.jsp.jstl-1.2.2.jar!/META-INF/sql.tld" />
+    <resource url="http://java.sun.com/jsp/jstl/x" location="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/javax.servlet.jsp.jstl-1.2.2.jar!/META-INF/x.tld" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />

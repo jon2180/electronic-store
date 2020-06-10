@@ -410,7 +410,6 @@ public class ProductService {
         if (name != null) {
             name = name.replaceAll("%", "\\%");
         }
-        System.out.println(name);
 
         String sql = "SELECT COUNT(id) FROM product WHERE name LIKE ?";
         String sql2 = "SELECT * FROM product WHERE name LIKE ? ORDER BY id DESC LIMIT ?,?";

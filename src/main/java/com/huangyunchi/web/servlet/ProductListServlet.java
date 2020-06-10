@@ -39,7 +39,7 @@ public class ProductListServlet extends HttpServlet {
         Integer id = Integer.valueOf(0);
         if (idStr != null && !"".equals(idStr)) {
             id = Integer.valueOf(idStr);
-            CategoryService categoryService = new CategoryService();
+            CategoryService categoryService = ServiceFactory.getCategoryService();
             Category cate = categoryService.findOne(id);
             request.setAttribute("cate", cate);
         }

@@ -30,12 +30,12 @@ public class Category implements Serializable {
     /**
      * 排序权重
      */
-    private int order_weight = 10;
+    private int orderWeight = 10;
 
     /**
      * 子类目列表
      */
-    private List<Category> childs = new ArrayList<Category>();
+    private List<Category> children = new ArrayList<Category>();
 
     /**
      * @return the id
@@ -96,29 +96,29 @@ public class Category implements Serializable {
     /**
      * @return the order_weight
      */
-    public int getOrder_weight() {
-        return order_weight;
+    public int getOrderWeight() {
+        return orderWeight;
     }
 
     /**
-     * @param order_weight the order_weight to set
+     * @param orderWeight the order_weight to set
      */
-    public void setOrder_weight(int order_weight) {
-        this.order_weight = order_weight;
+    public void setOrderWeight(int orderWeight) {
+        this.orderWeight = orderWeight;
     }
 
     /**
      * @return the childs
      */
-    public List<Category> getChilds() {
-        return childs;
+    public List<Category> getChildren() {
+        return children;
     }
 
     /**
-     * @param childs the childs to set
+     * @param children the childs to set
      */
-    public void setChilds(List<Category> childs) {
-        this.childs = childs;
+    public void setChildren(List<Category> children) {
+        this.children = children;
     }
 
     /* (non-Javadoc)
@@ -127,7 +127,7 @@ public class Category implements Serializable {
     @Override
     public String toString() {
         return "Category [id=" + id + ", name=" + name + ", alias=" + alias
-                + ", p_id=" + p_id + ", order_weight=" + order_weight
-                + ", childs=" + childs + "]";
+                + ", p_id=" + p_id + ", order_weight=" + orderWeight
+                + ", childs=" + children + "]";
     }
 }

@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 
+import static com.huangyunchi.web.KeyConfig.captchaName;
+
 /**
  * 处理注册会员的Servlet
  */
@@ -36,6 +38,17 @@ public class MemberRegisterServlet extends HttpServlet {
         //step1： 获取客户端提交的数据
         String mobile = request.getParameter("mobile");
         String rawPwd = request.getParameter("pwd");
+        String captcha = request.getParameter("captcha");
+
+        // step 2: 检查验证码信息
+        if (captcha == null ||
+                !captcha.toLowerCase().equals(
+                        (request.getSession().getAttribute(captchaName)).toString().toLowerCase()
+                )) {
+            request.setAttribute("msg", "注册失败，验证码不匹配");
+            request.getRequestDispatcher("/member_login.jsp").forward(request, response);
+            return;
+        }
 
         // 验证格式
         if (!Validator.mobilePhone(mobile) || !Validator.checkComplexPassword(rawPwd)) {
@@ -44,31 +57,31 @@ public class MemberRegisterServlet extends HttpServlet {
             return;
         }
 
-        // 密码md5加密处理
-        String pwd = null;
-        try {
-            pwd = HeaUtil.md5(rawPwd);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-
-        Member mbr = new Member();
-        mbr.setMobile(mobile);
-        mbr.setPwd(pwd);
-        mbr.setNick_name("匿名");
-        mbr.setRegister_time(new Date(System.currentTimeMillis()));
-
         //step2: 业务逻辑处理
         MemberService service = ServiceFactory.getMemberService();
         //根据手机号查询会员对象
         Member temp = service.findByMobile(mobile);
+
         if (temp != null) { //手机号已经存在
             request.setAttribute("msg", "注册失败，手机号已经被注册了！");
-
             request.getRequestDispatcher("/member_register.jsp").forward(request, response);
         } else {
-            service.save(mbr);
 
+            // 密码md5加密处理
+            String pwd = null;
+            try {
+                pwd = HeaUtil.md5(rawPwd);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+
+            Member mbr = new Member();
+            mbr.setMobile(mobile);
+            mbr.setPwd(pwd);
+            mbr.setNick_name("匿名");
+            mbr.setRegister_time(new Date(System.currentTimeMillis()));
+
+            service.save(mbr);
             //跳转到登录页面
             response.sendRedirect(request.getContextPath() + "/member_login.jsp");
         }

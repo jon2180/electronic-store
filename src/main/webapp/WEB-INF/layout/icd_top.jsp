@@ -34,8 +34,8 @@
     <div id="subject">
         <div class="wrapper row">
             <div class="col-xs-2" id="logo">
-                <a href="${ctx}/main "> <img src="${ctx}/images/logo-zx.jpg"
-                                             style="width: 160px;"/>
+                <a href="${ctx}/main"> <img src="${ctx}/images/logo-zx.jpg"
+                                             style="width: 160px;" alt="logo"/>
                 </a>
             </div>
             <div class="col-xs-2"></div>
@@ -81,7 +81,7 @@
                                    class="text-ellipsis"> ${top.name}<i
                                     class="icon-angle-right director"></i></a>
                                 <ul class="sub-list">
-                                    <c:forEach items="${top.childs}" var="second">
+                                    <c:forEach items="${top.children}" var="second">
                                         <li><a target="_blank"
                                                href="${ctx}/product/list?level=second&id=${second.id}">${second.name}</a>
                                         </li>
@@ -96,7 +96,7 @@
             <ul class="nav navbar-nav col-xs-9">
                 <li ${param.tag == 'index' ? "class='active'" : ""}><a
                         href="${ctx}/main">首页</a></li>
-                <li><a href="about.jsp">关于我们</a></li>
+                <li><a href="../../about.jsp">关于我们</a></li>
             </ul>
         </div>
     </div>

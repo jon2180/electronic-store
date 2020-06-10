@@ -5,12 +5,12 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-    <jsp:include page="/icd_meta.jsp"/>
+    <jsp:include page="/WEB-INF/layout/icd_meta.jsp"/>
     <title>卓尔商城-公告列表</title>
-    <jsp:include page="/icd_link.jsp"/>
+    <jsp:include page="/WEB-INF/layout/icd_link.jsp"/>
 </head>
 <body>
-<jsp:include page="/icd_top.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/layout/icd_top.jsp"></jsp:include>
 
 <!-- 公告列表 -->
 <div class="wrapper" style="min-height: 500px">
@@ -38,7 +38,7 @@
 </div>
 <!-- /公告列表 -->
 
-<jsp:include page="/icd_bottom.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/layout/icd_bottom.jsp"></jsp:include>
 
 <script src="${ctx}/zui/lib/jquery/jquery.js"></script>
 <script src="${ctx}/js/jquery.scrollUp.min.js"></script>

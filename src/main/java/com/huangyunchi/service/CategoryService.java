@@ -28,13 +28,13 @@ public class CategoryService {
         String sql = "INSERT INTO category(name, alias, order_weight, p_id) VALUES(?,?,?,?)";
 
         Object[] params = {cate.getName(), cate.getAlias(),
-                cate.getOrder_weight(), cate.getP_id()};
+                cate.getOrderWeight(), cate.getP_id()};
 
         Connection conn = null;
         try {
             conn = DbHelper.getConn(); //获取数据库连接
             conn.setAutoCommit(false); //开启事务
-            System.out.println(sql);
+
             //执行数据库操作的插入操作，返回生成的主键值
             BigInteger id = qr.insert(conn, sql, scalarHandler, params);
             cate.setId(id.intValue());
@@ -53,14 +53,13 @@ public class CategoryService {
         String sql = "UPDATE category SET name=?, alias=?, order_weight=?, p_id=? WHERE id=?";
 
         Object[] params = {cate.getName(), cate.getAlias(),
-                cate.getOrder_weight(), cate.getP_id(), cate.getId()};
+                cate.getOrderWeight(), cate.getP_id(), cate.getId()};
 
         Connection conn = null;
         try {
             conn = DbHelper.getConn(); //获取数据库连接
             conn.setAutoCommit(false); //开启事务
 
-            System.out.println(sql);
             //执行数据库的更新操作
             qr.update(conn, sql, params);
 
@@ -80,7 +79,6 @@ public class CategoryService {
         try {
             conn = DbHelper.getConn();
 
-            System.out.println(sql);
             //执行数据库的查询操作
             cate = qr.query(conn, sql, beanHandler, id);
         } catch (Exception e) {
@@ -93,14 +91,13 @@ public class CategoryService {
     }
 
     public List<Category> findAll() throws RuntimeException {
-        List<Category> list = new ArrayList<Category>();
+        List<Category> list;
         String sql = "SELECT * FROM category ORDER BY order_weight DESC,id ASC";
 
         Connection conn = null;
         try {
             conn = DbHelper.getConn();
 
-            System.out.println(sql);
             //执行数据库的查询操作
             list = qr.query(conn, sql, beanListHandler);
 
@@ -123,8 +120,6 @@ public class CategoryService {
             conn = DbHelper.getConn();
             conn.setAutoCommit(false);
 
-            System.out.println(sql);
-
             BigInteger count = qr.query(sql, scalarHandler, id);
             if (count != null && count.longValue() > 0) {
                 throw new RuntimeException("删除失败，有子类目");
@@ -141,19 +136,19 @@ public class CategoryService {
 
     //组装父子关系
     private List<Category> convert(List<Category> categories) {
-        List<Category> parents = new ArrayList<Category>();
-        List<Category> childs = new LinkedList<Category>();
+        List<Category> parents = new ArrayList<>();
+        List<Category> children = new LinkedList<>();
         for (Category category : categories) {
             if (category.getP_id() == null) {
                 parents.add(category);
             } else {
-                childs.add(category);
+                children.add(category);
             }
         }
         for (Category parent : parents) {
-            for (Category child : childs) {
+            for (Category child : children) {
                 if (parent.getId().equals(child.getP_id())) {
-                    parent.getChilds().add(child);
+                    parent.getChildren().add(child);
                 }
             }
         }

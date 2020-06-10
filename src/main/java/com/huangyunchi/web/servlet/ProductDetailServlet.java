@@ -38,7 +38,7 @@ public class ProductDetailServlet extends HttpServlet {
 
         //查询商品所属的类目对象
         Integer cate_id = product.getCate_id();
-        CategoryService categoryService = new CategoryService();
+        CategoryService categoryService = ServiceFactory.getCategoryService();
         Category cate = categoryService.findOne(cate_id);
         request.setAttribute("cate", cate);
 

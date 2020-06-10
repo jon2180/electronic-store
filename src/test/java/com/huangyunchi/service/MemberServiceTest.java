@@ -4,43 +4,38 @@ import com.huangyunchi.entity.Member;
 import com.huangyunchi.entity.common.Page;
 import org.junit.jupiter.api.Test;
 
-import java.util.Date;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
 
 public class MemberServiceTest {
 
     @Test
     public void testDelete() {
-        MemberService service = new MemberService();
-
+        MemberService service = ServiceFactory.getMemberService();
         service.delete(2);
     }
 
     @Test
     public void testUpdate() {
-        MemberService service = new MemberService();
-
+        MemberService service = ServiceFactory.getMemberService();
         Member mbr = service.findOne(Integer.valueOf(1));
         mbr.setMobile("0000");
-
         service.update(mbr);
     }
 
     @Test
     public void testFindByPage() {
-        MemberService service = new MemberService();
-
+        MemberService service = ServiceFactory.getMemberService();
         Page<Member> page = service.findByPager(1, 10);
-
         System.out.println(page);
     }
 
     @Test
     public void testFindAll() {
-        MemberService service = new MemberService();
-
+        MemberService service = ServiceFactory.getMemberService();
         List<Member> list = service.findAll();
-
         for (Member member : list) {
             System.out.println(member);
         }
@@ -48,37 +43,23 @@ public class MemberServiceTest {
 
     @Test
     public void testFindByMobile() {
-        MemberService service = new MemberService();
-
+        MemberService service = ServiceFactory.getMemberService();
         Member mbr = service.findByMobile("11111");
-
         System.out.println(mbr);
     }
 
     @Test
     public void testFindOne() {
-        MemberService service = new MemberService();
-
+        MemberService service = ServiceFactory.getMemberService();
         Member mbr = service.findOne(Integer.valueOf(1));
-
         System.out.println(mbr);
     }
 
-    @Test
+//    @Test
     public void testSave() {
-//        Member mbr = new Member();
-//        mbr.setMobile("119");
-//        mbr.setPwd("119");
-//        mbr.setReal_name("火哥");
-//        mbr.setNick_name("火火火");
-//        mbr.setGender(true);
-//        mbr.setEmail("119@119.com");
-//        mbr.setRegister_time(new Date());
-//
-//
-//        MemberService service = new MemberService();
-//        Member newMbr = service.save(mbr);
-//
-//        System.out.println(newMbr);
+        Member member = mock(Member.class);
+        MemberService service = ServiceFactory.getMemberService();
+        Member newMbr = service.save(member);
+        assertNotNull(newMbr);
     }
 }

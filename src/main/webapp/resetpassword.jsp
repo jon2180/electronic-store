@@ -4,17 +4,23 @@
 <html lang="zh-cn">
 <head>
     <jsp:include page="/WEB-INF/layout/icd_meta.jsp"/>
-    <title>卓尔商城-注册会员</title>
+    <title>卓尔商城-会员登录</title>
     <jsp:include page="/WEB-INF/layout/icd_link.jsp"/>
 </head>
 <body>
 <jsp:include page="/WEB-INF/layout/icd_top.jsp"></jsp:include>
 
+<div>
+
+    此功能暂未实现
+
+</div>
+
 <!-- 主内容 -->
-<div class="wrapper" style="min-height: 500px;">
+<div class="wrapper" style="min-height: 500px; display: none">
     <div class="panel" style="margin-top: 20px">
         <div class="panel-heading" style="font-size: 18px">
-            <strong>会员注册</strong>
+            <strong>会员登录</strong>
         </div>
         <div class="panel-body row">
             <div class="col-xs-3"></div>
@@ -22,30 +28,29 @@
             <div class="col-xs-6" style="padding: 30px 60px">
                 <div class="panel" style="border: none;">
                     <div class="panel-heading" style="background: none;">
-                        <strong>欢迎注册成为会员</strong>
+                        <strong>已有帐号</strong>
                     </div>
                     <div class="panel-body">
-                        <form action="${ctx}/member_register" method="post" onsubmit="return validate()">
+                        <form action="${ctx}/member_login" method="post" onsubmit="return validate()">
                             <c:if test="${!empty msg}">
                                 <div class="form-group">
                                     <div id="formError" class="alert alert-danger">${msg}</div>
                                 </div>
                                 <c:remove var="msg"/>
                             </c:if>
+                            <!-- 格式验证提示 -->
                             <div class="form-group" id="errorContainer" style="display: none">
                                 <div id="formValidateNotice" class="alert alert-danger"></div>
                             </div>
+
+                            <!-- 实际内容 -->
                             <div class="form-group">
-                                <input type="text" name="mobile" id="mobile"
+                                <input type="text" name="mobile" id="mobile" value=""
                                        placeholder="请输入手机号" class="form-control input-lg">
                             </div>
                             <div class="form-group">
-                                <input type="password" name="pwd" id="password" value=""
+                                <input type="password" name="pwd" id="pwd" value=""
                                        placeholder="请输入密码" class="form-control input-lg">
-                            </div>
-                            <div class="form-group">
-                                <input type="password" name="pwd2" id="repassword" value=""
-                                       placeholder="请再输入密码" class="form-control input-lg">
                             </div>
                             <div class="form-group">
                                 <input type="text" name="captcha" id="captcha"
@@ -54,9 +59,10 @@
                             <div class="form-group">
                                 <img src="${pageContext.request.contextPath}/tool/captcha/" alt="验证码">
                             </div>
-                            <button type="submit" class="btn btn-primary btn-wider btn-lg">注册</button>
-                            &nbsp; &nbsp;
-                            <button type="reset" class="btn btn-wider btn-lg">重置</button>
+
+                            <button type="submit" class="btn btn-primary btn-wider btn-lg">登录</button>
+                            &nbsp; &nbsp;<a href="${ctx}/member_register.jsp">注册</a>&nbsp;
+                            &nbsp; <a href="${ctx}/resetpassword.jsp">忘记密码</a>
                         </form>
                     </div>
                 </div>
@@ -78,13 +84,12 @@
 <script>
     function validate() {
         const mobile = $('#mobile').val()
-        const password = $('#password').val();
-        const confirm = $('#repassword').val();
+        const password = $('#pwd').val();
 
         const $container = $('#errorContainer');
-        const $notice =$('#formValidateNotice');
+        const $notice = $('#formValidateNotice');
 
-        if (!validator.phoneNumber(mobile) || password !== confirm || !validator.password(password)) {
+        if (!validator.phoneNumber(mobile) || !validator.password(password)) {
             $container.show();
             $notice.text('表单输入内容存在格式错误，验证失败，请查证后再提交');
             return false;

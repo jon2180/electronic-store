@@ -142,14 +142,12 @@ public class OrdersService {
         try {
             conn = DbHelper.getConn();
 
-            System.out.println(sql);
             Long temp = qr.query(conn, sql, scalarHandler);
             if (temp != null && temp.longValue() > 0) {
                 page.setTotalElements(temp.longValue());
 
                 List<Orders> list = new ArrayList<Orders>();
 
-                System.out.println(sql2);
                 pstmt = conn.prepareStatement(sql2);
                 pstmt.setInt(1, (number - 1) * size);
                 pstmt.setInt(2, size);
@@ -314,14 +312,12 @@ public class OrdersService {
         try {
             conn = DbHelper.getConn();
 
-            System.out.println(sql);
             Long temp = qr.query(conn, sql, scalarHandler, status);
             if (temp != null && temp.longValue() > 0) {
                 page.setTotalElements(temp.longValue());
 
-                List<Orders> list = new ArrayList<Orders>();
+                List<Orders> list = new ArrayList<>();
 
-                System.out.println(sql2);
                 pstmt = conn.prepareStatement(sql2);
                 pstmt.setInt(1, status);
                 pstmt.setInt(2, (number - 1) * size);
@@ -487,14 +483,12 @@ public class OrdersService {
         try {
             conn = DbHelper.getConn();
 
-            System.out.println(sql);
             Long temp = qr.query(conn, sql, scalarHandler, buyer_id);
             if (temp != null && temp.longValue() > 0) {
                 page.setTotalElements(temp.longValue());
 
-                List<Orders> list = new ArrayList<Orders>();
+                List<Orders> list = new ArrayList<>();
 
-                System.out.println(sql2);
                 pstmt = conn.prepareStatement(sql2);
                 pstmt.setInt(1, buyer_id);
                 pstmt.setInt(2, (number - 1) * size);

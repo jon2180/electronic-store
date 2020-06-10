@@ -9,14 +9,14 @@ public class CategoryServiceTest {
 
     @Test
     public void testFindAll() {
-        CategoryService service = new CategoryService();
+        CategoryService service = ServiceFactory.getCategoryService();
 
         List<Category> list = service.findAll(); //
 
         for (Category category : list) { //遍历一级类目
             System.out.println("|--" + category.getName());
 
-            for (Category child : category.getChilds()) { //遍历当前一级类目下的所有二级类目
+            for (Category child : category.getChildren()) { //遍历当前一级类目下的所有二级类目
                 System.out.println("    |--" + child.getName());
             }
         }
