@@ -1,16 +1,10 @@
 package com.huangyunchi.service;
 
-import com.huangyunchi.common.DbHelper;
+import com.huangyunchi.dao.ProductDAO;
+import com.huangyunchi.dao.impl.ProductDAOImpl;
 import com.huangyunchi.entity.Product;
 import com.huangyunchi.entity.common.Page;
-import org.apache.commons.dbutils.DbUtils;
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.ScalarHandler;
 
-import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,225 +14,41 @@ import java.util.List;
  * @author qiujy
  */
 public class ProductService {
-    private final QueryRunner qr = new QueryRunner();
-    private final ScalarHandler<Long> scalarHandler = new ScalarHandler<>();
-    private final BeanHandler<Product> beanHandler = new BeanHandler<>(Product.class);
-    private final BeanListHandler<Product> beanListHandler = new BeanListHandler<>(Product.class);
+
+    private final ProductDAO productDAO = new ProductDAOImpl();
 
     public Product save(Product product) throws RuntimeException {
-        String sql = "INSERT INTO product(name, cate_id, thumbnail, inventory, "
-                + "sales_volume,price,sale_price,detail_description,"
-                + "selling_description,create_time,sale_time) "
-                + " VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-
-        Object[] params = {product.getName(), product.getCate_id(),
-                product.getThumbnail(), product.getInventory(),
-                product.getSales_volume(), product.getPrice(),
-                product.getSale_price(), product.getDetail_description(),
-                product.getSelling_description(), product.getCreate_time(),
-                product.getSale_time()};
-
-        Connection conn = null;
-        try {
-            conn = DbHelper.getConn();
-            conn.setAutoCommit(false);
-
-            Long id = qr.insert(conn, sql, scalarHandler, params);
-            product.setId(id.intValue());
-
-            DbUtils.commitAndCloseQuietly(conn);
-        } catch (Exception e) {
-            DbUtils.rollbackAndCloseQuietly(conn);
-
-            throw new RuntimeException(e);
-        }
-
+        productDAO.save(product);
         return product;
     }
 
     public void update(Product product) throws RuntimeException {
-        String sql = "UPDATE product SET name=?, cate_id=?, thumbnail=?, inventory=?, "
-                + "sales_volume=?,price=?,sale_price=?,detail_description=?,"
-                + "selling_description=?,create_time=?,sale_time=? WHERE id=?";
-
-        Object[] params = {product.getName(), product.getCate_id(),
-                product.getThumbnail(), product.getInventory(),
-                product.getSales_volume(), product.getPrice(),
-                product.getSale_price(), product.getDetail_description(),
-                product.getSelling_description(), product.getCreate_time(),
-                product.getSale_time(), product.getId()};
-
-        Connection conn = null;
-        try {
-            conn = DbHelper.getConn();
-            conn.setAutoCommit(false);
-
-            qr.update(conn, sql, params);
-
-            DbUtils.commitAndCloseQuietly(conn);
-        } catch (Exception e) {
-            DbUtils.rollbackAndCloseQuietly(conn);
-
-            throw new RuntimeException(e);
-        }
+        productDAO.update(product);
     }
 
     public Product findOne(Integer id) throws RuntimeException {
-        Product product = null;
-        String sql = "SELECT * FROM product WHERE id=?";
-
-        Connection conn = null;
-        try {
-            conn = DbHelper.getConn();
-
-            product = qr.query(conn, sql, beanHandler, id);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            DbUtils.closeQuietly(conn);
-        }
-
-        return product;
+        return productDAO.findByID(id);
     }
 
     public List<Product> find(Integer... ids) throws RuntimeException {
-        List<Product> list = new ArrayList<>();
-
-        if (ids == null || ids.length == 0) {
-            return list;
-        }
-
-        StringBuilder sql = new StringBuilder("SELECT * FROM product WHERE id IN(");
-        for (int i = 0; i < ids.length; i++) {
-            if (i > 0) {
-                sql.append(",");
-            }
-            sql.append(ids[i]);
-        }
-        sql.append(")");
-
-        Connection conn = null;
-        try {
-            conn = DbHelper.getConn();
-            System.out.println(sql.toString());
-            list = qr.query(conn, sql.toString(), beanListHandler);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            DbUtils.closeQuietly(conn);
-        }
-        return list;
+        return productDAO.findByIDs(ids);
     }
 
     public Page<Product> findAll(int number, int size) throws RuntimeException {
-        Page<Product> page = new Page<>(number, size);
-
-        String sql = "SELECT COUNT(id) FROM product ";
-        String sql2 = "SELECT * FROM product ORDER BY id DESC LIMIT ?,?";
-
-        Connection conn = null;
-        try {
-            conn = DbHelper.getConn();
-
-            Long temp = qr.query(conn, sql, scalarHandler);
-            if (temp != null && temp > 0) {
-                page.setTotalElements(temp);
-
-                Object[] params = {(number - 1) * size,
-                        size};
-
-                List<Product> list = qr.query(conn, sql2, beanListHandler, params);
-                page.setItems(list);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            DbUtils.closeQuietly(conn);
-        }
-        return page;
+        return productDAO.findByPaging(number, size);
     }
 
 
     public Page<Product> findAll(int cate_id, String title, int number, int size) throws RuntimeException {
-        Page<Product> page = new Page<>(number, size);
-
-        StringBuilder sql = new StringBuilder("SELECT COUNT(p.id) FROM product p WHERE 1=1 ");
-        StringBuilder sql2 = new StringBuilder("SELECT p.* FROM product p WHERE 1=1 ");
-        List<Object> param = new ArrayList<>();
-        if (cate_id > 0) {
-            sql.append(" AND p.cate_id=?");
-            sql2.append(" AND p.cate_id=?");
-
-            param.add(cate_id);
-        }
-        if (title != null && !"".equals(title.trim())) {
-            sql.append(" AND p.name LIKE ?");
-            sql2.append(" AND p.name LIKE ?");
-
-            param.add("%" + title.trim() + "%");
-        }
-
-
-        Connection conn = null;
-        try {
-            conn = DbHelper.getConn();
-
-            Long temp = qr.query(conn, sql.toString(),
-                    scalarHandler, param.toArray());
-            if (temp != null && temp > 0) {
-                page.setTotalElements(temp);
-
-                sql2.append(" ORDER BY p.id DESC LIMIT ?,?");
-                param.add((number - 1) * size);
-                param.add(size);
-
-                List<Product> list = qr.query(conn, sql2.toString(), beanListHandler, param.toArray());
-                page.setItems(list);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            DbUtils.closeQuietly(conn);
-        }
-        return page;
+        return productDAO.findAll(cate_id, title, number, size);
     }
 
     public void delete(Integer id) throws RuntimeException {
-        String sql = "DELETE FROM  product WHERE id=?";
-
-        Connection conn = null;
-        try {
-            conn = DbHelper.getConn();
-            conn.setAutoCommit(false);
-
-            qr.update(conn, sql, id);
-
-            DbUtils.commitAndCloseQuietly(conn);
-        } catch (Exception e) {
-            DbUtils.rollbackAndCloseQuietly(conn);
-            throw new RuntimeException(e);
-        }
+        productDAO.remove(id);
     }
 
     public long count() throws RuntimeException {
-        long count = 0;
-
-        String sql = "SELECT count(id) FROM product";
-
-        Connection conn = null;
-        try {
-            conn = DbHelper.getConn();
-
-            Long temp = qr.query(conn, sql, scalarHandler);
-            if (temp != null && temp.longValue() > 0) {
-                count = temp.longValue();
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            DbUtils.closeQuietly(conn);
-        }
-        return count;
+        return productDAO.getCount();
     }
 
     /**
@@ -251,32 +61,7 @@ public class ProductService {
      * @throws RuntimeException
      */
     public Page<Product> findBySubCategory(Integer cate_id, int number, int size) throws RuntimeException {
-        Page<Product> page = new Page<>(number, size);
-
-        String sql = "SELECT COUNT(id) FROM product WHERE cate_id=?";
-        String sql2 = "SELECT * FROM product WHERE cate_id=? ORDER BY sale_time DESC LIMIT ?,?";
-
-        Connection conn = null;
-        try {
-            conn = DbHelper.getConn();
-
-            Long temp = qr.query(conn, sql, scalarHandler, cate_id);
-            if (temp != null && temp > 0) {
-                page.setTotalElements(temp);
-
-                Object[] params = {cate_id,
-                        (number - 1) * size,
-                        size};
-
-                List<Product> list = qr.query(conn, sql2, beanListHandler, params);
-                page.setItems(list);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            DbUtils.closeQuietly(conn);
-        }
-        return page;
+        return productDAO.findBySubCategory(cate_id, number, size);
     }
 
     /**
@@ -288,31 +73,7 @@ public class ProductService {
      * @throws RuntimeException
      */
     public Page<Product> findHot(int number, int size) throws RuntimeException {
-        Page<Product> page = new Page<>(number, size);
-
-        String sql = "SELECT COUNT(id) FROM product";
-        String sql2 = "SELECT * FROM product ORDER BY sales_volume DESC,id DESC LIMIT ?,?";
-
-        Connection conn = null;
-        try {
-            conn = DbHelper.getConn();
-
-            Long temp = qr.query(conn, sql, scalarHandler);
-            if (temp != null && temp.longValue() > 0) {
-                page.setTotalElements(temp.longValue());
-
-                Object[] params = {Integer.valueOf((number - 1) * size),
-                        Integer.valueOf(size)};
-
-                List<Product> list = qr.query(conn, sql2, beanListHandler, params);
-                page.setItems(list);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            DbUtils.closeQuietly(conn);
-        }
-        return page;
+        return productDAO.findHot(number, size);
     }
 
     /**
@@ -325,36 +86,7 @@ public class ProductService {
      * @throws RuntimeException
      */
     public Page<Product> findHotTopCategory(Integer cate_id, int number, int size) throws RuntimeException {
-        Page<Product> page = new Page<>(number, size);
-
-        String sql = "SELECT COUNT(id) FROM product "
-                + "WHERE cate_id IN(SELECT id FROM category WHERE p_id=?)";
-
-        String sql2 = "SELECT * FROM product "
-                + "WHERE cate_id IN(SELECT id FROM category WHERE p_id=?) "
-                + "ORDER BY sales_volume DESC,id DESC LIMIT ?,?";
-
-        Connection conn = null;
-        try {
-            conn = DbHelper.getConn();
-
-            Long temp = qr.query(conn, sql, scalarHandler, cate_id);
-            if (temp != null && temp.longValue() > 0) {
-                page.setTotalElements(temp.longValue());
-
-                Object[] params = {cate_id,
-                        Integer.valueOf((number - 1) * size),
-                        Integer.valueOf(size)};
-
-                List<Product> list = qr.query(conn, sql2, beanListHandler, params);
-                page.setItems(list);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            DbUtils.closeQuietly(conn);
-        }
-        return page;
+        return productDAO.findHotTopCategory(cate_id, number, size);
     }
 
     /**
@@ -367,32 +99,7 @@ public class ProductService {
      * @throws RuntimeException
      */
     public Page<Product> findHotSubCategory(Integer cate_id, int number, int size) throws RuntimeException {
-        Page<Product> page = new Page<>(number, size);
-
-        String sql = "SELECT COUNT(id) FROM product WHERE cate_id=?";
-        String sql2 = "SELECT * FROM product WHERE cate_id=? ORDER BY sales_volume DESC,id DESC LIMIT ?,?";
-
-        Connection conn = null;
-        try {
-            conn = DbHelper.getConn();
-
-            Long temp = qr.query(conn, sql, scalarHandler, cate_id);
-            if (temp != null && temp.longValue() > 0) {
-                page.setTotalElements(temp.longValue());
-
-                Object[] params = {cate_id,
-                        Integer.valueOf((number - 1) * size),
-                        Integer.valueOf(size)};
-
-                List<Product> list = qr.query(conn, sql2, beanListHandler, params);
-                page.setItems(list);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            DbUtils.closeQuietly(conn);
-        }
-        return page;
+        return productDAO.findHotSubCategory(cate_id, number, size);
     }
 
     /**
@@ -405,36 +112,7 @@ public class ProductService {
      * @throws RuntimeException
      */
     public Page<Product> findByLikeName(String name, int number, int size) throws RuntimeException {
-        Page<Product> page = new Page<>(number, size);
-
-        if (name != null) {
-            name = name.replaceAll("%", "\\%");
-        }
-
-        String sql = "SELECT COUNT(id) FROM product WHERE name LIKE ?";
-        String sql2 = "SELECT * FROM product WHERE name LIKE ? ORDER BY id DESC LIMIT ?,?";
-
-        Connection conn = null;
-        try {
-            conn = DbHelper.getConn();
-
-            Long temp = qr.query(conn, sql, scalarHandler, "%" + name + "%");
-            if (temp != null && temp.longValue() > 0) {
-                page.setTotalElements(temp.longValue());
-
-                Object[] params = {"%" + name + "%",
-                        Integer.valueOf((number - 1) * size),
-                        Integer.valueOf(size)};
-
-                List<Product> list = qr.query(conn, sql2, beanListHandler, params);
-                page.setItems(list);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            DbUtils.closeQuietly(conn);
-        }
-        return page;
+        return productDAO.findByLikeName(name, number, size);
     }
 
     /**
@@ -447,35 +125,6 @@ public class ProductService {
      * @throws RuntimeException
      */
     public Page<Product> findByTopCategory(Integer cate_id, int number, int size) throws RuntimeException {
-        Page<Product> page = new Page<>(number, size);
-
-        String sql = "SELECT COUNT(id) FROM product "
-                + "WHERE cate_id IN(SELECT id FROM category WHERE p_id=?)";
-
-        String sql2 = "SELECT * FROM product "
-                + "WHERE cate_id IN(SELECT id FROM category WHERE p_id=?) "
-                + "ORDER BY id DESC LIMIT ?,?";
-
-        Connection conn = null;
-        try {
-            conn = DbHelper.getConn();
-
-            Long temp = qr.query(conn, sql, scalarHandler, cate_id);
-            if (temp != null && temp.longValue() > 0) {
-                page.setTotalElements(temp.longValue());
-
-                Object[] params = {cate_id,
-                        Integer.valueOf((number - 1) * size),
-                        Integer.valueOf(size)};
-
-                List<Product> list = qr.query(conn, sql2, beanListHandler, params);
-                page.setItems(list);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            DbUtils.closeQuietly(conn);
-        }
-        return page;
+        return productDAO.findByTopCategory(cate_id, number, size);
     }
 }

@@ -35,7 +35,7 @@ public class AddressUpdateServlet extends HttpServlet {
         address.setMobile(mobile);
         address.setStreet(street);
         address.setZipcode(zipcode);
-        boolean dv = Boolean.valueOf(default_value);
+        boolean dv = Boolean.parseBoolean(default_value);
         address.setDefault_value(dv);
 
         service.update(address);

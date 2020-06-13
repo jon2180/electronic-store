@@ -118,7 +118,7 @@
 <!-- 添加到购物车的对话框 -->
 <div class="modal fade" id="addToCartModal">
     <div class="modal-dialog modal-sm">
-        <form action="./profile" method="post" class="form-horizontal">
+        <form class="form-horizontal">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">
@@ -127,9 +127,8 @@
                     <h4 class="modal-title">商品成功加入购物车</h4>
                 </div>
                 <div class="modal-footer">
-                    <a href="${ctx}/main" class="btn btn-primary">继续购物</a> <a
-                        href="${ctx}/view_cart.jsp" class="btn btn-primary"
-                        style="min-width: 80px">立即结算</a>
+                    <a href="${ctx}/main" class="btn btn-primary">继续购物</a>
+                    <a href="${ctx}/view_cart" class="btn btn-primary" style="min-width: 80px">立即结算</a>
                 </div>
             </div>
         </form>

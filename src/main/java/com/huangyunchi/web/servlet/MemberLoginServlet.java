@@ -32,7 +32,7 @@ public class MemberLoginServlet extends BaseHttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        dispatchToView("member_login.jsp", req, resp);
+        dispatchToPrivateView("member_login.jsp", req, resp);
     }
 
     /**

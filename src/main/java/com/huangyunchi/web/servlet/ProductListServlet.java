@@ -36,7 +36,7 @@ public class ProductListServlet extends HttpServlet {
         }
         //////////////类目编号的处理
         String idStr = request.getParameter("id");
-        Integer id = Integer.valueOf(0);
+        Integer id = 0;
         if (idStr != null && !"".equals(idStr)) {
             id = Integer.valueOf(idStr);
             CategoryService categoryService = ServiceFactory.getCategoryService();

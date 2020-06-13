@@ -54,7 +54,7 @@
             </div>
             <div class="col-xs-2"></div>
             <div class="col-xs-2" id="cart">
-                <a href="${ctx}/view_cart.jsp" class="btn btn-primary"
+                <a href="${ctx}/view_cart" class="btn btn-primary"
                    style="width: 120px; height: 40px; line-height: 30px;"> <i
                         class="icon icon-shopping-cart"></i> 购物车
                     <!-- <span class="label label-badge" style="background-color: #eba5a3;">4</span> -->
@@ -95,8 +95,8 @@
 
             <ul class="nav navbar-nav col-xs-9">
                 <li ${param.tag == 'index' ? "class='active'" : ""}><a
-                        href="${ctx}/main">首页</a></li>
-                <li><a href="../../about.jsp">关于我们</a></li>
+                        href="${ctx}/">首页</a></li>
+                <li><a href="${pageContext.request.contextPath}/about.jsp">关于我们</a></li>
             </ul>
         </div>
     </div>

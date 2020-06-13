@@ -37,9 +37,9 @@ public class OrderConfirmServlet extends HttpServlet {
         ProductService service = ServiceFactory.getProductService();
 
         int allAmount = 0;
-        BigDecimal allPrice = new BigDecimal(0.00);
-        BigDecimal allPaymentPrice = new BigDecimal(0.00);
-        List<Item> items = new ArrayList<Item>();
+        BigDecimal allPrice = new BigDecimal("0.00");
+        BigDecimal allPaymentPrice = new BigDecimal("0.00");
+        List<Item> items = new ArrayList<>();
 
         int length = idStrs == null ? 0 : idStrs.length;
         for (int i = 0; i < length; i++) {
@@ -71,7 +71,7 @@ public class OrderConfirmServlet extends HttpServlet {
             //改购物车中的相应商品的数量
             @SuppressWarnings("unchecked")
             Map<Product, Integer> cart = (Map<Product, Integer>) session.getAttribute("cart");
-            cart.put(product, Integer.valueOf(amount));
+            cart.put(product, amount);
         }
 
         //订单实体类

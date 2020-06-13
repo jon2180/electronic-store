@@ -1,16 +1,9 @@
 package com.huangyunchi.service;
 
-import com.huangyunchi.common.DbHelper;
+import com.huangyunchi.dao.AddressDAO;
+import com.huangyunchi.dao.impl.AddressDAOImpl;
 import com.huangyunchi.entity.Address;
-import org.apache.commons.dbutils.DbUtils;
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.ScalarHandler;
 
-import java.math.BigInteger;
-import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,35 +12,11 @@ import java.util.List;
  * @author qiujy
  */
 public class AddressService {
-    private final QueryRunner qr = new QueryRunner();
-    private final ScalarHandler<BigInteger> scalarHandler = new ScalarHandler<>();
-    private final BeanHandler<Address> beanHandler = new BeanHandler<>(Address.class);
-    private final BeanListHandler<Address> beanListHandler = new BeanListHandler<>(Address.class);
+
+    private final AddressDAO addressDAO = new AddressDAOImpl();
 
     public Address save(Address address) throws RuntimeException {
-        String sql = "INSERT INTO address(contact, mobile, street, zipcode, "
-                + "default_value, mbr_id) VALUES(?,?,?,?,?,?)";
-
-        Object[] params = {address.getContact(), address.getMobile(),
-                address.getStreet(), address.getZipcode(),
-                address.getDefault_value(), address.getMbr_id()};
-
-        Connection conn = null;
-        try {
-            conn = DbHelper.getConn(); //获取数据库连接
-            conn.setAutoCommit(false); //开启事务
-
-            //执行数据库操作的插入操作，返回生成的主键值
-            BigInteger id = qr.insert(conn, sql, scalarHandler, params);
-            address.setId(id.intValue());
-
-            DbUtils.commitAndCloseQuietly(conn); //提交事务并关闭连接
-        } catch (Exception e) {
-            DbUtils.rollbackAndCloseQuietly(conn); //回滚事务并关闭连接
-
-            throw new RuntimeException(e);
-        }
-
+        addressDAO.save(address);
         return address;
     }
 
@@ -58,47 +27,11 @@ public class AddressService {
      * @throws RuntimeException
      */
     public void update(Address address) throws RuntimeException {
-        String sql = "UPDATE address SET contact=?, mobile=?, street=?, "
-                + "zipcode=?,default_value=?,mbr_id=? WHERE id=?";
-
-        Object[] params = {address.getContact(), address.getMobile(),
-                address.getStreet(), address.getZipcode(),
-                address.getDefault_value(), address.getMbr_id(), address.getId()};
-
-        Connection conn = null;
-        try {
-            conn = DbHelper.getConn(); //获取数据库连接
-            conn.setAutoCommit(false); //开启事务
-
-            //执行数据库的更新操作
-            qr.update(conn, sql, params);
-
-            DbUtils.commitAndCloseQuietly(conn); //提交事务并关闭连接
-        } catch (Exception e) {
-            DbUtils.rollbackAndCloseQuietly(conn); //回滚事务并关闭连接
-
-            throw new RuntimeException(e);
-        }
+        addressDAO.update(address);
     }
 
     public void updateDefault(Integer mbr_id, Integer address_id) throws RuntimeException {
-        String sql = "UPDATE address SET default_value=false WHERE mbr_id=?";
-        String sql2 = "UPDATE address SET default_value=true WHERE mbr_id=? AND id=?";
-
-        Connection conn = null;
-        try {
-            conn = DbHelper.getConn();
-            conn.setAutoCommit(false);
-
-            qr.update(conn, sql, mbr_id);
-            qr.update(conn, sql2, mbr_id, address_id);
-
-            DbUtils.commitAndCloseQuietly(conn);
-        } catch (Exception e) {
-            DbUtils.rollbackAndCloseQuietly(conn);
-
-            throw new RuntimeException(e);
-        }
+        addressDAO.changeDefault(mbr_id, address_id);
     }
 
     /**
@@ -108,21 +41,7 @@ public class AddressService {
      * @throws RuntimeException
      */
     public void delete(Integer id) throws RuntimeException {
-        String sql = "DELETE FROM address WHERE id=?";
-
-        Connection conn = null;
-        try {
-            conn = DbHelper.getConn();
-            conn.setAutoCommit(false);
-
-            qr.update(conn, sql, id);
-
-            DbUtils.commitAndCloseQuietly(conn);
-        } catch (Exception e) {
-            DbUtils.rollbackAndCloseQuietly(conn);
-
-            throw new RuntimeException(e);
-        }
+        addressDAO.remove(id);
     }
 
     /**
@@ -133,22 +52,7 @@ public class AddressService {
      * @throws RuntimeException
      */
     public List<Address> findByMember(Integer mbr_id) throws RuntimeException {
-        List<Address> list = new ArrayList<>();
-
-        String sql = "SELECT * FROM address WHERE mbr_id=? ORDER BY default_value DESC,id DESC";
-
-        Connection conn = null;
-        try {
-            conn = DbHelper.getConn();
-
-            list = qr
-                    .query(conn, sql, beanListHandler, mbr_id);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            DbUtils.closeQuietly(conn);
-        }
-        return list;
+        return addressDAO.findByMemberID(mbr_id);
     }
 
     /**
@@ -159,19 +63,6 @@ public class AddressService {
      * @throws RuntimeException
      */
     public Address findOne(Integer id) throws RuntimeException {
-        Address address = null;
-        String sql = "SELECT * FROM address WHERE id=?";
-
-        Connection conn = null;
-        try {
-            conn = DbHelper.getConn();
-
-            address = qr.query(conn, sql, beanHandler, id);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            DbUtils.closeQuietly(conn);
-        }
-        return address;
+        return addressDAO.findByID(id);
     }
 }

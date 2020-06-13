@@ -8,7 +8,7 @@
     <jsp:include page="/WEB-INF/layout/icd_link.jsp"/>
 </head>
 <body>
-<jsp:include page="/WEB-INF/layout/icd_top.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/layout/icd_top.jsp" />
 
 <!-- 主内容 -->
 <div class="wrapper" style="min-height: 500px;">
@@ -69,7 +69,7 @@
 </div>
 <!-- /主内容 -->
 
-<jsp:include page="/WEB-INF/layout/icd_bottom.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/layout/icd_bottom.jsp" />
 
 <script src="${ctx}/zui/lib/jquery/jquery.js"></script>
 <script src="${ctx}/js/jquery.scrollUp.min.js"></script>

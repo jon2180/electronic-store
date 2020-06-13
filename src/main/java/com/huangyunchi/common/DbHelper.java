@@ -53,10 +53,14 @@ public class DbHelper {
     /**
      * 获取数据库的一个连接对象
      *
-     * @return Connection
-     * @throws SQLException
+     * @return Connection 连接对象
+     * @throws SQLException 出现连接获取问题
      */
     public static Connection getConn() throws SQLException {
         return dds.getConnection();
+    }
+
+    public static DataSource getDataSource() {
+        return dds;
     }
 }

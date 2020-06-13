@@ -43,18 +43,13 @@ public class AddToCartServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Map<Product, Integer> cart = (Map<Product, Integer>) session.getAttribute("cart");
         if (cart == null) {
-            cart = new ConcurrentHashMap<Product, Integer>();
+            cart = new ConcurrentHashMap<>();
             session.setAttribute("cart", cart);
         }
 
         //购物车,用商品对象作为key，用数量给value存放到Map
         //先把购物车中获取是否已经存在当前要购买的商品
-        Integer oldNum = cart.get(prod);
-        if (oldNum != null) {
-            cart.put(prod, Integer.valueOf(oldNum.intValue() + num.intValue()));
-        } else {
-            cart.put(prod, num);
-        }
+        cart.merge(prod, num, Integer::sum);
 
         //step3: 响应文本
         response.setContentType("text/html;charset=UTF-8");

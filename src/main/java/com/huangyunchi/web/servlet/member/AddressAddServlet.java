@@ -35,7 +35,7 @@ public class AddressAddServlet extends HttpServlet {
         address.setMobile(mobile);
         address.setStreet(street);
         address.setZipcode(zipcode);
-        boolean dv = Boolean.valueOf(default_value);
+        boolean dv = Boolean.parseBoolean(default_value);
         address.setDefault_value(dv);
 
         //设置这个要新增的地址所属的会员ID
