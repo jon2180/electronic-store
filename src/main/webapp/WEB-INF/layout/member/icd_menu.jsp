@@ -14,10 +14,10 @@
         <li class="nav-parent show"><a href="javascript:"> 个人信息</a>
             <ul class="nav">
                 <li ${param.tag == 'profile' ? "class='active' " : ""}><a
-                        href="${ctx}/member/profile.jsp"><i class="icon-user"></i> 个人资料<i
+                        href="${ctx}/member/profile"><i class="icon-user"></i> 个人资料<i
                         class="icon-chevron-right"></i></a></li>
                 <li ${param.tag == 'pwd' ? "class='active' " : ""}><a
-                        href="${ctx}/member/updatepwd.jsp"><i class="icon-eye-open"></i>
+                        href="${ctx}/member/update_pwd"><i class="icon-eye-open"></i>
                     修改密码<i class="icon-chevron-right"></i></a></li>
             </ul>
         </li>

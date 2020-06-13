@@ -1,5 +1,6 @@
 package com.huangyunchi.web.servlet.member;
 
+import com.huangyunchi.common.BaseHttpServlet;
 import com.huangyunchi.entity.Member;
 import com.huangyunchi.entity.Orders;
 import com.huangyunchi.entity.common.Page;
@@ -8,7 +9,6 @@ import com.huangyunchi.service.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -19,7 +19,7 @@ import java.io.IOException;
  * @author qiujy
  */
 @WebServlet("/member/orders")
-public class OrderListServlet extends HttpServlet {
+public class OrderListServlet extends BaseHttpServlet {
     private static final long serialVersionUID = 2964566478709855605L;
     private final OrdersService ordersService = ServiceFactory.getOrdersService();
 
@@ -47,6 +47,6 @@ public class OrderListServlet extends HttpServlet {
 
         Page<Orders> page = ordersService.findByBuyer(curr_mbr.getId(), number, size);
         req.setAttribute("page", page);
-        req.getRequestDispatcher("/member/index.jsp").forward(req, resp);
+        dispatchToPrivateView("/member/index.jsp", req, resp);
     }
 }

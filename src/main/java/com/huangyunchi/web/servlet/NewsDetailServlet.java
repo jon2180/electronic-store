@@ -1,5 +1,6 @@
 package com.huangyunchi.web.servlet;
 
+import com.huangyunchi.common.BaseHttpServlet;
 import com.huangyunchi.entity.News;
 import com.huangyunchi.service.NewsService;
 import com.huangyunchi.service.ServiceFactory;
@@ -15,7 +16,7 @@ import java.io.IOException;
  * 公告的详情
  */
 @WebServlet("/news/detail")
-public class NewsDetailServlet extends HttpServlet {
+public class NewsDetailServlet extends BaseHttpServlet {
     private static final long serialVersionUID = 1L;
 
 
@@ -31,7 +32,7 @@ public class NewsDetailServlet extends HttpServlet {
 
         //
         request.setAttribute("news", news);
-        request.getRequestDispatcher("/news_detail.jsp").forward(request, response);
+        dispatchToPrivateView("/news_detail.jsp", request, response);
     }
 
     /**

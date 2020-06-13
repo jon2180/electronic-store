@@ -1,5 +1,6 @@
 package com.huangyunchi.web.servlet.member;
 
+import com.huangyunchi.common.BaseHttpServlet;
 import com.huangyunchi.entity.Member;
 import com.huangyunchi.service.MemberService;
 import com.huangyunchi.service.ServiceFactory;
@@ -16,14 +17,14 @@ import java.io.PrintWriter;
  * 会员的个人资料修改功能------>处理的是异步请求
  */
 @WebServlet("/member/profile")
-public class MemberProfileServlet extends HttpServlet {
+public class MemberProfileServlet extends BaseHttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
      * response)
      */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //step1: 获取请求中的参数数据
         String nick_name = request.getParameter("nick_name");
@@ -53,9 +54,8 @@ public class MemberProfileServlet extends HttpServlet {
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
      * response)
      */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        dispatchToPrivateView("/member/profile.jsp", req, resp);
     }
-
 }

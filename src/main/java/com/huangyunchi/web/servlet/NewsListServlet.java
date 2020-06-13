@@ -1,10 +1,10 @@
 package com.huangyunchi.web.servlet;
 
+import com.huangyunchi.common.BaseHttpServlet;
 import com.huangyunchi.entity.News;
 import com.huangyunchi.entity.common.Page;
 import com.huangyunchi.service.NewsService;
 import com.huangyunchi.service.ServiceFactory;
-import javafx.concurrent.Service;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +17,7 @@ import java.io.IOException;
  * 公告的列表页
  */
 @WebServlet("/news/list")
-public class NewsListServlet extends HttpServlet {
+public class NewsListServlet extends BaseHttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -40,7 +40,7 @@ public class NewsListServlet extends HttpServlet {
 
 
         request.setAttribute("newsPage", page);
-        request.getRequestDispatcher("/news_list.jsp").forward(request, response);
+        dispatchToPrivateView("/news_list.jsp", request, response);
     }
 
     /**

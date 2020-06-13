@@ -150,14 +150,14 @@
     <!-- 广告 -->
     <div class="list">
         <a target="_blank" href="${ctx}/product_detail?id=4"><img
-                src="./img/banner_ad.jpg" alt=""></a>
+                src="../../img/banner_ad.jpg" alt=""></a>
     </div>
     <!-- /广告 -->
 </div>
 
 <!-- /商品列表 -->
 
-<jsp:include page="/WEB-INF/layout/icd_bottom.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/layout/icd_bottom.jsp" />
 
 <script src="${ctx}/zui/lib/jquery/jquery.js"></script>
 <script src="${ctx}/js/jquery.scrollUp.min.js"></script>

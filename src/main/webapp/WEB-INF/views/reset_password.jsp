@@ -8,7 +8,7 @@
     <jsp:include page="/WEB-INF/layout/icd_link.jsp"/>
 </head>
 <body>
-<jsp:include page="/WEB-INF/layout/icd_top.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/layout/icd_top.jsp"/>
 
 <div>
 
@@ -62,7 +62,7 @@
 
                             <button type="submit" class="btn btn-primary btn-wider btn-lg">登录</button>
                             &nbsp; &nbsp;<a href="${ctx}/member_register.jsp">注册</a>&nbsp;
-                            &nbsp; <a href="${ctx}/resetpassword.jsp">忘记密码</a>
+                            &nbsp; <a href="${ctx}/WEB-INF/views/reset_password.jsp">忘记密码</a>
                         </form>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
 </div>
 <!-- /主内容 -->
 
-<jsp:include page="/WEB-INF/layout/icd_bottom.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/layout/icd_bottom.jsp" />
 
 <script src="${ctx}/zui/lib/jquery/jquery.js"></script>
 <script src="${ctx}/js/jquery.scrollUp.min.js"></script>

@@ -24,9 +24,6 @@ public class RemoveFromCartServlet extends HttpServlet {
         String idStr = request.getParameter("id");
         Integer id = Integer.valueOf(idStr);
 
-        //ProductService service = ServiceFactory.getProductService();
-        //Product prod = service.findOne(id);
-
         //购物车是存放在session中的
         HttpSession session = request.getSession();
         @SuppressWarnings("unchecked")
@@ -47,7 +44,7 @@ public class RemoveFromCartServlet extends HttpServlet {
             }
         }
 
-        request.getRequestDispatcher("/view_cart.jsp").forward(request, response);
+        request.getRequestDispatcher("/view_cart").forward(request, response);
     }
 
     /**

@@ -9,7 +9,7 @@
     <jsp:include page="/WEB-INF/layout/icd_link.jsp"/>
 </head>
 <body>
-<jsp:include page="/WEB-INF/layout/icd_top.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/layout/icd_top.jsp" />
 
 <!-- 主内容 -->
 <div class="wrapper">
@@ -113,7 +113,7 @@
 </div>
 <!-- /主内容 -->
 
-<jsp:include page="/WEB-INF/layout/icd_bottom.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/layout/icd_bottom.jsp" />
 
 <!-- 添加到购物车的对话框 -->
 <div class="modal fade" id="addToCartModal">

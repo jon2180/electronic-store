@@ -1,5 +1,6 @@
 package com.huangyunchi.web.servlet;
 
+import com.huangyunchi.common.BaseHttpServlet;
 import com.huangyunchi.entity.Category;
 import com.huangyunchi.entity.Product;
 import com.huangyunchi.entity.common.Page;
@@ -18,7 +19,7 @@ import java.io.IOException;
  * 分类下的商品列表
  */
 @WebServlet("/product/list")
-public class ProductListServlet extends HttpServlet {
+public class ProductListServlet extends BaseHttpServlet {
     private static final long serialVersionUID = 1L;
 
 
@@ -60,7 +61,8 @@ public class ProductListServlet extends HttpServlet {
         }
 
         request.setAttribute("prodPage", page);
-        request.getRequestDispatcher("/product_list.jsp").forward(request, response);
+
+        dispatchToPrivateView("/product_list.jsp", request, response);
     }
 
     /**

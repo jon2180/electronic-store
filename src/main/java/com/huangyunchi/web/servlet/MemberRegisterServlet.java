@@ -1,5 +1,6 @@
 package com.huangyunchi.web.servlet;
 
+import com.huangyunchi.common.BaseHttpServlet;
 import com.huangyunchi.entity.Member;
 import com.huangyunchi.service.MemberService;
 import com.huangyunchi.service.ServiceFactory;
@@ -21,7 +22,7 @@ import static com.huangyunchi.web.KeyConfig.captchaName;
  * 处理注册会员的Servlet
  */
 @WebServlet("/member_register")
-public class MemberRegisterServlet extends HttpServlet {
+public class MemberRegisterServlet extends BaseHttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -46,7 +47,7 @@ public class MemberRegisterServlet extends HttpServlet {
                         (request.getSession().getAttribute(captchaName)).toString().toLowerCase()
                 )) {
             request.setAttribute("msg", "注册失败，验证码不匹配");
-            request.getRequestDispatcher("/member_login.jsp").forward(request, response);
+            request.getRequestDispatcher("/member_register.jsp").forward(request, response);
             return;
         }
 

@@ -1,5 +1,6 @@
 package com.huangyunchi.web.servlet;
 
+import com.huangyunchi.common.BaseHttpServlet;
 import com.huangyunchi.entity.Product;
 import com.huangyunchi.entity.common.Page;
 import com.huangyunchi.service.ProductService;
@@ -16,7 +17,7 @@ import java.io.IOException;
  * 处理 根据 商品名 模糊查询商品的Servlet
  */
 @WebServlet("/search")
-public class SearchServlet extends HttpServlet {
+public class SearchServlet extends BaseHttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -44,7 +45,7 @@ public class SearchServlet extends HttpServlet {
 
         //
         request.setAttribute("page", page);
-        request.getRequestDispatcher("/result.jsp").forward(request, response);
+        dispatchToPrivateView("/result.jsp", request, response);
     }
 
     /**

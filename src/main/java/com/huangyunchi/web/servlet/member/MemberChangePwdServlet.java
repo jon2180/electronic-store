@@ -1,5 +1,6 @@
 package com.huangyunchi.web.servlet.member;
 
+import com.huangyunchi.common.BaseHttpServlet;
 import com.huangyunchi.entity.Member;
 import com.huangyunchi.service.MemberService;
 import com.huangyunchi.service.ServiceFactory;
@@ -15,7 +16,7 @@ import java.io.IOException;
  * 会员的修改密码功能
  */
 @WebServlet("/member/changepwd")
-public class MemberChangePwdServlet extends HttpServlet {
+public class MemberChangePwdServlet extends BaseHttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -42,7 +43,7 @@ public class MemberChangePwdServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/member_login.jsp");
         } else {
             request.setAttribute("msg", "密码修改失败，原密码有误！");
-            request.getRequestDispatcher("/member/updatepwd.jsp").forward(request, response);
+            dispatchToPrivateView("/member/updatepwd.jsp", request, response);
         }
     }
 

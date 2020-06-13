@@ -1,5 +1,6 @@
 package com.huangyunchi.web.servlet;
 
+import com.huangyunchi.common.BaseHttpServlet;
 import com.huangyunchi.entity.News;
 import com.huangyunchi.entity.Product;
 import com.huangyunchi.entity.common.Page;
@@ -9,7 +10,6 @@ import com.huangyunchi.service.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -18,7 +18,7 @@ import java.io.IOException;
  * 前台首页数据展示的Servlet
  */
 @WebServlet("/main")
-public class MainServlet extends HttpServlet {
+public class MainServlet extends BaseHttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -45,7 +45,7 @@ public class MainServlet extends HttpServlet {
         Page<Product> pageComputer = productService.findByTopCategory(2, 1, 6);
         request.setAttribute("computers", pageComputer.getItems());
 
-        request.getRequestDispatcher("/main.jsp").forward(request, response);
+        dispatchToPrivateView("/main.jsp", request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

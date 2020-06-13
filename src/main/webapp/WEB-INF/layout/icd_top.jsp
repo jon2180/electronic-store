@@ -34,7 +34,7 @@
     <div id="subject">
         <div class="wrapper row">
             <div class="col-xs-2" id="logo">
-                <a href="${ctx}/main"> <img src="${ctx}/images/logo-zx.jpg"
+                <a href="${ctx}/"> <img src="${ctx}/images/logo-zx.jpg"
                                              style="width: 160px;" alt="logo"/>
                 </a>
             </div>

@@ -6,30 +6,24 @@
 <html lang="zh-cn">
 <head>
     <jsp:include page="/WEB-INF/layout/icd_meta.jsp"/>
-    <title>卓尔商城-商品列表</title>
+    <title>查询结果</title>
     <jsp:include page="/WEB-INF/layout/icd_link.jsp"/>
 </head>
 <body>
-<jsp:include page="/WEB-INF/layout/icd_top.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/layout/icd_top.jsp" />
 
 <!-- 商品列表 -->
 <div class="wrapper" style="min-height: 500px">
     <!-- 面包屑导航 -->
     <ol class="breadcrumb">
-        <li><span class="breadcrumb-title">当前位置：</span> <a
-                href="${ctx}/main">首页</a></li>
-        <c:if test="${!empty cate}">
-            <li class="active">${cate.name}</li>
-        </c:if>
-        <c:if test="${empty cate}">
-            <li class="active">热门商品</li>
-        </c:if>
+        <li><span class="breadcrumb-title">搜索关键字：</span>
+            ${param.keyword}</li>
     </ol>
 
     <!-- 列表开始 -->
     <div class="list">
         <section class="cards cards-borderless cards-products row">
-            <c:forEach items="${prodPage.items}" var="prod">
+            <c:forEach items="${page.items}" var="prod">
                 <div class="col-xs-2">
                     <div class="card">
                         <a href="${ctx}/product_detail?id=${prod.id}" target="_blank"><img
@@ -46,15 +40,15 @@
 
         <div class="clearfix"
              style="padding: 0 12px; border-top: 1px dotted #e5e5e5;">
-            <q:pager totalElements="${prodPage.totalElements}"
-                     number="${prodPage.number}"/>
+            <q:pager totalElements="${page.totalElements}"
+                     number="${page.number}"/>
         </div>
     </div>
     <!-- /列表结束 -->
 </div>
 <!-- /商品列表 -->
 
-<jsp:include page="/WEB-INF/layout/icd_bottom.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/layout/icd_bottom.jsp" />
 
 <script src="${ctx}/zui/lib/jquery/jquery.js"></script>
 <script src="${ctx}/js/jquery.scrollUp.min.js"></script>

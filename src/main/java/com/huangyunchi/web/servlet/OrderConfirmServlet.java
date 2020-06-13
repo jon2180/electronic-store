@@ -1,5 +1,6 @@
 package com.huangyunchi.web.servlet;
 
+import com.huangyunchi.common.BaseHttpServlet;
 import com.huangyunchi.entity.*;
 import com.huangyunchi.service.AddressService;
 import com.huangyunchi.service.ProductService;
@@ -22,7 +23,7 @@ import java.util.Map;
  * 订单“去结算”的Servlet
  */
 @WebServlet("/order_confirm")
-public class OrderConfirmServlet extends HttpServlet {
+public class OrderConfirmServlet extends BaseHttpServlet {
     private static final long serialVersionUID = 1L;
 
 
@@ -98,7 +99,7 @@ public class OrderConfirmServlet extends HttpServlet {
             List<Address> addressList = service2.findByMember(mbr.getId());
             request.setAttribute("addressList", addressList);
 
-            request.getRequestDispatcher("/orders.jsp").forward(request, response);
+            dispatchToPrivateView("/orders.jsp", request, response);
         }
     }
 
