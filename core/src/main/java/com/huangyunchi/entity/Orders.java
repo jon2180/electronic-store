@@ -32,7 +32,7 @@ public class Orders implements Serializable {
     /* comment '订单状态：0下单,1待付款,2已付款,3待发货,4已发货,5己收货,6已完成,-1已取消' */
     private int status;
 
-    private List<Item> items = new ArrayList<Item>();
+    private List<Item> items = new ArrayList<>();
 
     /**
      * @return the id

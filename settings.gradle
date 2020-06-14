@@ -1,2 +1,5 @@
 rootProject.name = 'electronic-store'
+include 'consumer'
+include 'core'
+include 'vendor'
 

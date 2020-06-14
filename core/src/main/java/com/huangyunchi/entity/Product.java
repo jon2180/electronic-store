@@ -232,7 +232,7 @@ public class Product implements Serializable {
         } else return id.equals(other.id);
     }
 
-    /* (non-Javadoc)
+    /** (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     @Override

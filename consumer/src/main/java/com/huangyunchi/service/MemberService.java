@@ -1,20 +1,10 @@
 package com.huangyunchi.service;
 
-import com.huangyunchi.common.DbHelper;
 import com.huangyunchi.dao.MemberDAO;
 import com.huangyunchi.dao.impl.MemberDAOImpl;
 import com.huangyunchi.entity.Member;
 import com.huangyunchi.entity.common.Page;
-import org.apache.commons.dbutils.DbUtils;
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.ScalarHandler;
 
-import java.math.BigInteger;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
