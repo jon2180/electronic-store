@@ -1,64 +1,66 @@
 package com.huangyunchi.common;
 
-import org.apache.commons.dbutils.DbUtils;
+import com.alibaba.druid.pool.DruidDataSourceFactory;
 import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.ResultSetHandler;
-import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
 
+import javax.sql.DataSource;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
+import java.util.Properties;
+import java.util.logging.Logger;
 
 public class BaseDAO {
 
-    private final QueryRunner qr = new QueryRunner();
+    /**
+     * 创建一个集合类，用于加载配置文件
+     */
+    private static final Properties props = new Properties();
 
+    private final static Logger logger = Logger.getLogger(BaseDAO.class.getName());
 
-    public <T> T executeUpdate(String sql, ResultSetHandler<T> rsh, Object... params) {
-        Connection conn = null;
-        T rs;
+    protected final Logger log = Logger.getLogger(getClass().getName());
+
+    /**
+     * 数据源对象
+     */
+    private static DataSource dds = null;
+    protected static QueryRunner qr;
+
+    static {
         try {
-            conn = DbHelper.getConn(); //获取数据库连接
-            conn.setAutoCommit(false); //开启事务
-
-            //执行数据库操作的插入操作，返回生成的主键值
-            rs = qr.insert(conn, sql, rsh, params);
-
-            DbUtils.commitAndCloseQuietly(conn); //提交事务并关闭连接
+            InputStream is = Thread.currentThread()
+                    .getContextClassLoader()
+                    .getResourceAsStream("dbconfig.properties");
+            props.load(is);
+            // 根据配置文件来创建一个Druid连接池
+            dds = DruidDataSourceFactory.createDataSource(props);
+            qr = new QueryRunner(dds);
+        } catch (IOException e) {
+            logger.severe("加载数据库配置文件失败！请检查");
+            e.printStackTrace();
         } catch (Exception e) {
-            DbUtils.rollbackAndCloseQuietly(conn); //回滚事务并关闭连接
-
-            throw new RuntimeException(e);
+            logger.severe("创建连接池失败！");
+            e.printStackTrace();
         }
-        return rs;
     }
 
-    public <T> List<T> executeListQuery(String sql, BeanListHandler<T> rsh, Object... params) {
-        List<T> list = new ArrayList<>();
-        Connection conn = null;
-        try {
-            conn = DbHelper.getConn();
-            list = qr.query(conn, sql, rsh, params);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            DbUtils.closeQuietly(conn);
-        }
-        return list;
+    /**
+     * 获取数据库的一个连接对象
+     *
+     * @return Connection 连接对象
+     * @throws SQLException 出现连接获取问题
+     */
+    public static Connection getConnection() throws SQLException {
+        return dds.getConnection();
     }
 
-    public <T> T executeQuery(String sql, BeanHandler<T> rsh, Object... params) {
-        T rs = null;
-        Connection conn = null;
-        try {
-            conn = DbHelper.getConn();
-            rs = qr.query(conn, sql, rsh, params);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            DbUtils.closeQuietly(conn);
-        }
-        return rs;
+    public static DataSource getDataSource() {
+        return dds;
+    }
+
+    public static QueryRunner getQr() {
+        return qr;
     }
 }

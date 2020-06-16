@@ -29,8 +29,6 @@ public class OrdersDAOImpl implements OrderDAO {
 
     private final QueryRunner qr = new QueryRunner();
     private final ScalarHandler<Long> scalarHandler = new ScalarHandler<>();
-    //private BeanHandler<Orders> beanHandler = new BeanHandler<Orders>(Orders.class);
-    //private BeanListHandler<Orders> beanListHandler = new BeanListHandler<Orders>(Orders.class);
 
     /**
      * 添加订单，并级联添加订单项
