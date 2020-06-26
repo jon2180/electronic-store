@@ -1,6 +1,8 @@
 allprojects {
     group 'com.huangyunchi'
     version '1.0-SNAPSHOT'
+    apply plugin: 'java'
+    sourceCompatibility = 11
 
     repositories {
         maven { url 'https://maven.aliyun.com/repository/public/' }
@@ -13,4 +15,55 @@ allprojects {
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
     }
+
+    dependencies {
+        // 引入 lombok
+        annotationProcessor 'org.projectlombok:lombok:+'
+        compileOnly 'org.projectlombok:lombok:+'
+        testAnnotationProcessor 'org.projectlombok:lombok:+'
+        testCompileOnly 'org.projectlombok:lombok:+'
+
+        // Use JUnit Jupiter API for testing.
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+        // https://mvnrepository.com/artifact/org.mockito/mockito-core
+        testImplementation 'org.mockito:mockito-core:3.3.3'
+        // Use JUnit Jupiter Engine for testing.
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.0'
+    }
+
+    test {
+        // Use junit platform for unit tests
+        useJUnitPlatform()
+    }
 }
+
+
+//    // https://mvnrepository.com/artifact/commons-io/commons-io
+//    implementation 'commons-io:commons-io:2.7'
+//    // https://mvnrepository.com/artifact/commons-codec/commons-codec
+//    implementation(group: 'commons-codec', name: 'commons-codec', version: '1.14')
+//    // https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
+//    implementation 'commons-fileupload:commons-fileupload:1.4'
+//    // https://mvnrepository.com/artifact/commons-dbutils/commons-dbutils
+//    implementation 'commons-dbutils:commons-dbutils:1.7'
+
+//    // https://mvnrepository.com/artifact/com.alibaba/druid
+//    implementation 'com.alibaba:druid:1.1.22'
+
+//    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+//    implementation 'mysql:mysql-connector-java:8.0.20'
+
+
+//// https://mvnrepository.com/artifact/commons-io/commons-io
+//implementation 'commons-io:commons-io:2.7'
+//// https://mvnrepository.com/artifact/commons-codec/commons-codec
+//implementation(group: 'commons-codec', name: 'commons-codec', version: '1.14')
+//// https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
+//implementation 'commons-fileupload:commons-fileupload:1.4'
+//// https://mvnrepository.com/artifact/commons-dbutils/commons-dbutils
+//implementation 'commons-dbutils:commons-dbutils:1.7'
+//
+//// https://mvnrepository.com/artifact/mysql/mysql-connector-java
+//implementation 'mysql:mysql-connector-java:8.0.20'
+//// https://mvnrepository.com/artifact/com.alibaba/druid
+//implementation 'com.alibaba:druid:1.1.22'

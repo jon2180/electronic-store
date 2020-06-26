@@ -1,4 +1,4 @@
-package com.huangyunchi.vendor.servlet;
+package com.huangyunchi.vendor.web;
 
 public class KeyConfig {
 

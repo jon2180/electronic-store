@@ -1,5 +1,7 @@
 package com.huangyunchi.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +11,7 @@ import java.util.List;
  *
  * @author qiujy
  */
+@Data
 public class Category implements Serializable {
     private static final long serialVersionUID = -3350763396111688050L;
     /**
@@ -38,90 +41,8 @@ public class Category implements Serializable {
     private List<Category> children = new ArrayList<Category>();
 
     /**
-     * @return the id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * @return the alias
-     */
-    public String getAlias() {
-        return alias;
-    }
-
-    /**
-     * @param alias the alias to set
-     */
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
-
-    /**
-     * @return the p_id
-     */
-    public Integer getP_id() {
-        return p_id;
-    }
-
-    /**
-     * @param p_id the p_id to set
-     */
-    public void setP_id(Integer p_id) {
-        this.p_id = p_id;
-    }
-
-    /**
-     * @return the order_weight
-     */
-    public int getOrderWeight() {
-        return orderWeight;
-    }
-
-    /**
-     * @param orderWeight the order_weight to set
-     */
-    public void setOrderWeight(int orderWeight) {
-        this.orderWeight = orderWeight;
-    }
-
-    /**
-     * @return the childs
-     */
-    public List<Category> getChildren() {
-        return children;
-    }
-
-    /**
-     * @param children the childs to set
-     */
-    public void setChildren(List<Category> children) {
-        this.children = children;
-    }
-
-    /* (non-Javadoc)
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#toString()
      */
     @Override

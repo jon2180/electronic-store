@@ -1,4 +1,4 @@
-package com.huangyunchi.vendor.servlet.tool;
+package com.huangyunchi.vendor.web.servlet.tool;
 
 import com.huangyunchi.util.CAPTCHAUtil;
 
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import static com.huangyunchi.vendor.servlet.KeyConfig.captchaName;
+import static com.huangyunchi.vendor.web.KeyConfig.captchaName;
 
 /**
  * 生成验证码的servlet，并将验证码的文本设置到session中，session 的键 为 KeyConfig.captchaName

@@ -1,8 +1,8 @@
-package com.huangyunchi.vendor.servlet.memeber;
+package com.huangyunchi.vendor.web.servlet.memeber;
 
 import com.huangyunchi.common.BaseHttpServlet;
 import com.huangyunchi.util.Validator;
-import com.huangyunchi.vendor.servlet.KeyConfig;
+import com.huangyunchi.vendor.web.KeyConfig;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

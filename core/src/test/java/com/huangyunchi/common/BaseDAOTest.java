@@ -13,14 +13,14 @@ public class BaseDAOTest {
     @Test
     public void testQuery() {
 
-        String sql = "select * from member where mobile=?";
-        try {
-            Member member = BaseDAO.getQr().query(sql, new BeanHandler<>(Member.class), "13344445555");
-            assertEquals(member.getMobile(), "13344445555");
-            System.out.println(member);
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
+//        String sql = "select * from member where mobile=?";
+//        try {
+//            Member member = BaseDAO.getQr().query(sql, new BeanHandler<>(Member.class), "13344445555");
+//            assertEquals(member.getMobile(), "13344445555");
+//            System.out.println(member);
+//        } catch (SQLException sqlException) {
+//            sqlException.printStackTrace();
+//        }
 
     }
 }

@@ -1,4 +1,4 @@
-package com.huangyunchi.vendor.servlet;
+package com.huangyunchi.vendor.web.servlet;
 
 import com.huangyunchi.common.BaseHttpServlet;
 
@@ -18,6 +18,7 @@ public class DashboardServlet extends BaseHttpServlet {
 //            index(req, resp);
 //            return;
 //        }
+
         dispatchToPrivateView("/dashboard.jsp", req, resp);
     }
 

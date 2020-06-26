@@ -125,8 +125,7 @@ const validator = (() => {
         }
         /* 手机号码 */
         , phoneNumber(str) {
-            const reg = /^[1][3456789][0-9]{9}$/
-            return reg.test(str)
+            return /^[1][3456789][0-9]{9}$/.test(str);
         }
         /* 手机号码和固定电话 */
         , validatePhTelNumber(str) {

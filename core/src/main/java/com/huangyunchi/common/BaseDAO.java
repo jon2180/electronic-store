@@ -1,7 +1,6 @@
 package com.huangyunchi.common;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
-import org.apache.commons.dbutils.QueryRunner;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -26,7 +25,6 @@ public class BaseDAO {
      * 数据源对象
      */
     private static DataSource dds = null;
-    protected static QueryRunner qr;
 
     static {
         try {
@@ -36,7 +34,6 @@ public class BaseDAO {
             props.load(is);
             // 根据配置文件来创建一个Druid连接池
             dds = DruidDataSourceFactory.createDataSource(props);
-            qr = new QueryRunner(dds);
         } catch (IOException e) {
             logger.severe("加载数据库配置文件失败！请检查");
             e.printStackTrace();
@@ -52,15 +49,11 @@ public class BaseDAO {
      * @return Connection 连接对象
      * @throws SQLException 出现连接获取问题
      */
-    public static Connection getConnection() throws SQLException {
+    protected static Connection getConnection() throws SQLException {
         return dds.getConnection();
     }
 
-    public static DataSource getDataSource() {
+    protected static DataSource getDataSource() {
         return dds;
-    }
-
-    public static QueryRunner getQr() {
-        return qr;
     }
 }
